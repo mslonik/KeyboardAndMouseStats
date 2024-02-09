@@ -512,7 +512,8 @@ Gui, KeybS: Add
 	,	% "x+-" . vControlPosW * 3 + 12 . A_Space . "HwndKeybS_TLeft   Border"
 	,	% "  ←  "
 
-; CTLCOLORS.Attach(KeybS_TLeft, "C0C0C0", "")
+
+F_ColorScale()
 
 
 Gui, KeybS: Show
@@ -526,6 +527,56 @@ KeybSGuiClose(GuiHwnd)
 {
 	ExitApp, 0
 }
+
+; = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
+F_ColorScale()	;color scale, 1…100 in form of text spaces with colored background.
+{
+	global	;assume-global mode of operation
+	local	AuxCounter 	:= 1
+		,	numColors := 100	; Define the number of colors
+		, rgbColors := ["800080", "7B0086", "76008D", "700094", "6B009A", "6600A1", "6100A7", "5C00AE", "5700B4", "5200BA"
+					,"4D00C0", "4800C6", "4300CC", "3E00D2", "3900D8", "3400DE", "2F00E4", "2A00EA", "2500F0", "2000F6"
+					,"1B00FC", "1604FF", "110AFE", "0C0EFD", "0718FC", "0222FB", "002CF9", "0036F8", "0040F7", "004AF5"
+					,"0054F3", "005EF2", "0068F0", "0072EE", "007CEC", "0086EA", "0090E8", "009AE6", "00A4E4", "00AEE3"
+					,"00B8E1", "00C2DF", "00CCDD", "00D6DB", "00E0D9", "00EAD7", "00F4D5", "00FED4", "08FFD6", "10FFD9"
+					,"18FFDC", "20FFDF", "28FFE2", "30FFE5", "38FFE8", "40FFEB", "48FFEE", "50FFF1", "58FFF4", "60FFF7"
+					,"68FFFA", "70FFFD", "78FFFF", "80FFFF", "88FFFF", "90FFFF", "98FFFF", "A0FFFF", "A8FFFF", "B0FFFF"
+					,"B8FFFF", "C0FFFF", "C8FFFF", "D0FFFF", "D8FFFF", "E0FFFF", "E8FFFF", "F0FFFF", "F8FFFF", "FFFFFF"
+					,"FFFFF8", "FFFFF0", "FFFFE8", "FFFFE0", "FFFFD8", "FFFFD0", "FFFFC8", "FFFFC0", "FFFFB8", "FFFFB0"
+					,"FFFFA8", "FFFFA0", "FFFF98", "FFFF90", "FFFF88", "FFFF80", "FFFF78", "FFFF70", "FFFF68", "FFFF60"
+					,"FFFF58", "FFFF50", "FFFF48", "FFFF40", "FFFF38", "FFFF30", "FFFF28", "FFFF20", "FFFF18", "FFFF10"]
+
+	DynVar 		:= ""	;declaration of global variable
+
+	; Gui, KeybS: Font, s10, Calibri
+	Gui, KeybS: Add
+		, 	Text
+		,	xm HwndKeybS_TS1   Border
+		,	% Chr(0x200A) ; U+200A is a hair space
+	CTLCOLORS.Attach(KeybS_TS1, rgbColors[1], "")
+
+	Loop, 99
+	{
+		AuxCounter 	:= A_Index + 1	;local
+		DynVar 		:= "KeybS_TS" . AuxCounter ;global
+		Gui, KeybS: Add
+			, 	Text
+			,	% "x+0" . A_Space . "Hwnd" . AHKVar(DynVar) . A_Space . "Border"
+			,	% " " ; 	% Chr(0x2009) ; U+200A is a thin space
+		CTLCOLORS.Attach(%DynVar%, rgbColors[AuxCounter], "")
+	}
+}
+
+; = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
+AHKVar(varName) 
+{
+    global  ; Ensure access to global variables
+    
+    return % varName ; Return the value of the variable with the specified name
+}
+
 
 ; = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
