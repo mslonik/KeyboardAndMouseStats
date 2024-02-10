@@ -27,8 +27,8 @@ FileEncoding, 			UTF-16		; Sets the default encoding for FileRead, FileReadLine,
 #include %A_ScriptDir%\Lib\ctcolors.ahk
 
 F_GuiDefine_Keybs()
-	OverallCounter := 0
-
+	vOverallCounter := 0
+,	aKeyboardCounters := {} 
 F_InitiateInputHook()
 v_InputH.Start()
 
@@ -39,16 +39,14 @@ return
 
 
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - FUNCTIONS BLOCK
-F_InitiateInputHook()	;why InputHook: to process triggerstring tips.
+F_InitiateInputHook()
 {
 	global	;assume-global mode of operation
 
-	OutputDebug, % A_ThisFunc . "`n" 
+	; OutputDebug, % A_ThisFunc . "`n" 
 	v_InputH 				:= InputHook("I5 V L0")			
-; ,	v_InputH.MinSendLevel 	:= ini_MinSendLevel			;I1 by default
-; ,	v_InputH.OnChar 		:= Func("F_OneCharPressed")
 ; ,	v_InputH.OnKeyDown		:= Func("F_OnKeyDown")
-,	v_InputH.OnKeyUp 		:= Func("F_InputHookOnKeyUp")	;this function is run whenever Backspace key or LShift or RShift is up 
+,	v_InputH.OnKeyUp 		:= Func("F_InputHookOnKeyUp")
 ,	v_InputH.OnEnd			:= Func("F_InputHookOnEnd")
 ,	v_InputH.KeyOpt("{All}", "N")	;Necessary if only OnKeyUp is present in the code; "N" = Notify
 	; OutputDebug, % A_ThisFunc . A_Space . "ini_MinSendLevel:" . ini_MinSendLevel . "|" . A_Space . v_InputH.MinSendLevel . "`n"
@@ -60,11 +58,13 @@ F_InputHookOnKeyUp(ih, VK, SC)	;this function is run whenever Backspace key or L
 	Critical, On
 	local	WhatWasUp := GetKeyName(Format("vk{:x}sc{:x}", VK, SC))
 
-	OverallCounter++
-
+	vOverallCounter++
 	NewVariableName := "KC_" . WhatWasUp	; Create a variable name dynamically based on WhatWasUp and assign it a value; KC = KeyCounter
 	if (!IsSet(%NewVariableName%))
+	{
 		%NewVariableName% := 0
+		aKeyboardCounters.Push(SubStr(NewVariableName, 4)) 
+	}
 	%NewVariableName%++
 	OutputDebug, % "WhatWasUp:" . WhatWasUp . "|" . "NewVariableName:" . NewVariableName . "|" . "%NewVariableName%:" . %NewVariableName%  . "`n"
 
