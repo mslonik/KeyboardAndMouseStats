@@ -26,7 +26,9 @@ FileEncoding, 			UTF-16		; Sets the default encoding for FileRead, FileReadLine,
 ; = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 #include %A_ScriptDir%\Lib\ctcolors.ahk
 
+Critical, On
 F_GuiDefine_Keybs()
+Critical, Off
 OnMessage(0x06, "WM_ACTIVATE")  ; Register callback F_WM_ACTIVATE to Windows Message WM_ACTIVATE := 0x0006
 	vOverallCounter := 0
 ,	aKeyboardCounters := {} 
@@ -38,8 +40,6 @@ return
 ; = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - FUNCTIONS BLOCK
-; Gui +LastFound  ; Ensure the next GUI event applies to the last found GUI window
-
 WM_ACTIVATE(wParam, lParam) 
 ; msg: The `msg` parameter is typically used to represent the message identifier. However, in the case of `OnMessage()`, AutoHotkey already knows which message we're handling because we specify it explicitly when registering the message handler. Therefore, there's no need to pass `msg` as a parameter to the user-defined function.
 ; hwnd: The `hwnd` parameter represents the handle of the window that received the message. In the case of `OnMessage()`, the `hwnd` is implicit and is not passed as a parameter to the user-defined function. Instead, the `hwnd` is available within the `WM_ACTIVATE` function as `lParam`. 
@@ -124,7 +124,7 @@ F_InputHookOnKeyUp(ih, VK, SC)
 		Case "/":		NewVariableName := "KC_" . "Slash"
 		Default:		NewVariableName := "KC_" . WhatWasUp	; Create a variable name dynamically based on WhatWasUp and assign it a value; KC = KeyCounter
 	}
-	; OutputDebug, % "NewVariableName:" . NewVariableName . "`n"
+	OutputDebug, % "NewVariableName:" . NewVariableName . "`n"
 	
 	if (!IsSet(%NewVariableName%))
 	{
