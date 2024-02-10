@@ -63,8 +63,26 @@ WM_ACTIVATE(wParam, lParam)
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 YourFunctionName() 
 {
-	OutputDebug, % A_ThisFunc . "`n"
-	; HwndKeybS_TA
+	global	;assume-global mode of operation
+	local	index 		:= 1
+		,	VarNameTemp 	:= ""
+		,	RefTemp 		:= 0
+		,	vWhichColor 	:= 0
+		,	WhichText		:= ""
+
+	; OutputDebug, % A_ThisFunc . A_Space . "vOverallCounter:" . vOverallCounter . "`n"
+	for index in aKeyboardCounters
+	{
+		WhichText		:= "KeybS_T"
+	,	VarNameTemp 	:= "KC_" . aKeyboardCounters[index]	; KC = KeyCounter
+	,	RefTemp 		:= %VarNameTemp%
+		; OutputDebug, % aKeyboardCounters[index] . "|" . RefTemp . "`n"
+	,	vWhichColor 	:= Floor((RefTemp / vOverallCounter) * 100)	;Floor = rounding down to the nearest integer
+		WhichText 	.= aKeyboardCounters[index]
+		; OutputDebug, % "WhichText:" . WhichText . "|" . "%WhichText%:" . %WhichText% . "|" . "ColorArg:" . vWhichColor . "|" . "ColorVal:" . rgbColors[vWhichColor] . "`n"
+		CTLCOLORS.Attach(%WhichText%, rgbColors[vWhichColor], "")
+	}
+	; OutputDebug, % A_ThisFunc . "`n"
 }
 
 
@@ -82,13 +100,13 @@ F_InitiateInputHook()
 	; OutputDebug, % A_ThisFunc . A_Space . "ini_MinSendLevel:" . ini_MinSendLevel . "|" . A_Space . v_InputH.MinSendLevel . "`n"
 }
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-F_InputHookOnKeyUp(ih, VK, SC)	;this function is run whenever Backspace key or LShift or RShift is up 
+F_InputHookOnKeyUp(ih, VK, SC)
 {
 	global	;assume-global mode of operation
 	Critical, On
 	local	WhatWasUp := GetKeyName(Format("vk{:x}sc{:x}", VK, SC))
 
-	OutputDebug, % "WhatWasUp:" . WhatWasUp . "`n"
+	; OutputDebug, % "WhatWasUp:" . WhatWasUp . "`n"
 	vOverallCounter++
 	NewVariableName := ""
 	Switch, WhatWasUp
@@ -106,7 +124,7 @@ F_InputHookOnKeyUp(ih, VK, SC)	;this function is run whenever Backspace key or L
 		Case "/":		NewVariableName := "KC_" . "Slash"
 		Default:		NewVariableName := "KC_" . WhatWasUp	; Create a variable name dynamically based on WhatWasUp and assign it a value; KC = KeyCounter
 	}
-	OutputDebug, % "NewVariableName:" . NewVariableName . "`n"
+	; OutputDebug, % "NewVariableName:" . NewVariableName . "`n"
 	
 	if (!IsSet(%NewVariableName%))
 	{
