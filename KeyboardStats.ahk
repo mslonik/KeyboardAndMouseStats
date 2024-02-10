@@ -28,10 +28,9 @@ FileEncoding, 			UTF-16		; Sets the default encoding for FileRead, FileReadLine,
 
 F_GuiDefine_Keybs()
 	OverallCounter := 0
-,	Counter_A := 0
-,	Counter_LShift := 0
 
 F_InitiateInputHook()
+v_InputH.Start()
 
 return
 ; = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
@@ -39,30 +38,19 @@ return
 ; = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
 
-~a up::
-	Counter_A++
-	OverallCounter++
-	OutputDebug, % "Counter_A:" . Counter_A . A_Space . "OverallCounter:" . OverallCounter . "`n"
-return
-
-~LShift up::
-	Counter_LShift++
-	OverallCounter++
-	OutputDebug, % "Counter_LShift:" . Counter_LShift . A_Space . "OverallCounter:" . OverallCounter . "`n"
-return
-
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - FUNCTIONS BLOCK
 F_InitiateInputHook()	;why InputHook: to process triggerstring tips.
 {
 	global	;assume-global mode of operation
-	v_InputH 				:= InputHook("V L0")			
+
+	OutputDebug, % A_ThisFunc . "`n" 
+	v_InputH 				:= InputHook("I5 V L0")			
 ; ,	v_InputH.MinSendLevel 	:= ini_MinSendLevel			;I1 by default
 ; ,	v_InputH.OnChar 		:= Func("F_OneCharPressed")
 ; ,	v_InputH.OnKeyDown		:= Func("F_OnKeyDown")
 ,	v_InputH.OnKeyUp 		:= Func("F_InputHookOnKeyUp")	;this function is run whenever Backspace key or LShift or RShift is up 
 ,	v_InputH.OnEnd			:= Func("F_InputHookOnEnd")
-	; v_InputH.KeyOpt("{Backspace}{LShift}{RShift}", "N")				;Backspace is not Char ;N: Notify. Causes the OnKeyDown and OnKeyUp callbacks to be called each time the key is pressed.
-	v_InputH.Start()
+,	v_InputH.KeyOpt("{All}", "N")	;Necessary if only OnKeyUp is present in the code; "N" = Notify
 	; OutputDebug, % A_ThisFunc . A_Space . "ini_MinSendLevel:" . ini_MinSendLevel . "|" . A_Space . v_InputH.MinSendLevel . "`n"
 }
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -72,8 +60,17 @@ F_InputHookOnKeyUp(ih, VK, SC)	;this function is run whenever Backspace key or L
 	Critical, On
 	local	WhatWasUp := GetKeyName(Format("vk{:x}sc{:x}", VK, SC))
 
+	OverallCounter++
+
+	NewVariableName := "KC_" . WhatWasUp	; Create a variable name dynamically based on WhatWasUp and assign it a value; KC = KeyCounter
+	if (!IsSet(%NewVariableName%))
+		%NewVariableName% := 0
+	%NewVariableName%++
+	OutputDebug, % "WhatWasUp:" . WhatWasUp . "|" . "NewVariableName:" . NewVariableName . "|" . "%NewVariableName%:" . %NewVariableName%  . "`n"
+
+	; HwndKeybS_TA
+
 	Critical, Off
-	; OutputDebug, % A_ThisFunc . A_Space . WhatWasUp . A_Space . "E" . "`n"
 }
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 F_InputHookOnEnd(ih)	;for debugging purposes
@@ -81,6 +78,7 @@ F_InputHookOnEnd(ih)	;for debugging purposes
 	global	;assume-global mode of operation
 	local 	KeyName 	:= ih.EndKey, Reason	:= ih.EndReason
 
+	OutputDebug, % A_ThisFunc . "`n" 
 	; if (ini_THLog)	
 	; 	FileAppend, % A_Hour . ":" . A_Min . ":" . A_Sec . "|" . ++v_LogCounter . "|" . "OnEnd" . "|" . KeyName 
 	; 		. "|" . "GetKeyName:" 	. "|" . GetKeyName(KeyName) 
