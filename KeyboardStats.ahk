@@ -50,18 +50,18 @@ WM_ACTIVATE(wParam, lParam)
 ; https://learn.microsoft.com/en-us/windows/win32/inputdev/wm-activate
 {
 	global	;assume-global mode of operation
-	Critical, On
+	Critical, On	;documentation says about it
 	; OutputDebug, % A_ThisFunc . "|" . "wParam:" . wParam . "|" . "lParam:" . lParam . "`n"
 	; Check if the GUI window is being activated
 	if ((wParam = 1) || (wParam = 2))
 	{  ; wParam 1 = activated by mouse, 2 = activated by keyboard ;for some reasons the lparam is always returned as null. In official Microsoft documentation: "This handle can be NULL." without any further explanation.
 		if WinActive(("ahk_id" KeybSHwnd))		; Check if the GUI window is active
-          	YourFunctionName()  ; Call your function when the specified GUI window is selected
+          	F_ColorGuiKeys()  ; Call your function when the specified GUI window is selected
     	}
-	return 0
+	return 0	;documentation says about it
 }
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-YourFunctionName() 
+F_ColorGuiKeys() 
 {
 	global	;assume-global mode of operation
 	local	index 		:= 1

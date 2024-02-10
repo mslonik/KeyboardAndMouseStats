@@ -428,7 +428,7 @@ F_GuiDefine_Keybs()
 		, 	Text
 		,	% "x" . vControlPosX . A_Space 
 		. "y" . vControlPosY + vControlPosH + 10 . A_Space 
-		. "HwndKeybS_TIns" . A_Space . "Border"
+		. "HwndKeybS_TInsert" . A_Space . "Border"
 		,	% " Ins "
 
 	Gui, KeybS: Add
@@ -443,13 +443,13 @@ F_GuiDefine_Keybs()
 
 	;middle island, third raw (3 keys) 
 	GuiControlGet, vControlPos, Pos
-		, 	% KeybS_TIns
+		, 	% KeybS_TInsert
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x" . vControlPosX . A_Space 
 		. "y" . vControlPosY + vControlPosH + 5 . A_Space 
-		. "HwndKeybS_TDel" . A_Space . "Border"
+		. "HwndKeybS_TDelete" . A_Space . "Border"
 		,	% " Del "
 
 	Gui, KeybS: Add
@@ -459,7 +459,7 @@ F_GuiDefine_Keybs()
 
 	Gui, KeybS: Add
 		, 	Text
-		,	% "x+5" . A_Space . "HwndKeybS_TPgDown" . A_Space . "Border"
+		,	% "x+5" . A_Space . "HwndKeybS_TPgDn" . A_Space . "Border"
 		,	% "  PD  "		;Home
 
 	;cursors (4 keys) 
