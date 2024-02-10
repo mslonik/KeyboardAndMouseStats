@@ -503,6 +503,10 @@ F_GuiDefine_Keybs()
 
 KeybSGuiClose(GuiHwnd)
 {
+	global	;assume-global mode of operation
+
+	CTLCOLORS.Free()
+	v_InputH.Stop()
 	ExitApp, 0
 }
 

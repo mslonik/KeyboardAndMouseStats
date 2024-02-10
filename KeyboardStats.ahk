@@ -69,23 +69,32 @@ F_ColorGuiKeys()
 		,	RefTemp 		:= 0
 		,	vWhichColor 	:= 0
 		,	WhichText		:= ""
+		,	MaxVal		:= 0
+
+	for index in aKeyboardCounters	;search for maximum value
+	{
+		VarNameTemp 	:= "KC_" . aKeyboardCounters[index]	; KC = KeyCounter
+	,	RefTemp 		:= %VarNameTemp%
+		if (RefTemp > MaxVal)
+			MaxVal 	:= RefTemp
+	}
 
 	; OutputDebug, % A_ThisFunc . A_Space . "vOverallCounter:" . vOverallCounter . "`n"
+	OutputDebug, % "MaxVal:" . MaxVal . "`n"
+	index 			:= 1
 	for index in aKeyboardCounters
 	{
 		WhichText		:= "KeybS_T"
 	,	VarNameTemp 	:= "KC_" . aKeyboardCounters[index]	; KC = KeyCounter
 	,	RefTemp 		:= %VarNameTemp%
-		; OutputDebug, % aKeyboardCounters[index] . "|" . RefTemp . "`n"
-	,	vWhichColor 	:= Floor((RefTemp / vOverallCounter) * 100)	;Floor = rounding down to the nearest integer
+		OutputDebug, % aKeyboardCounters[index] . "|" . RefTemp . "`n"
+	,	vWhichColor 	:= Floor((RefTemp / MaxVal) * 100)	;Floor = rounding down to the nearest integer
 		WhichText 	.= aKeyboardCounters[index]
-		; OutputDebug, % "WhichText:" . WhichText . "|" . "%WhichText%:" . %WhichText% . "|" . "ColorArg:" . vWhichColor . "|" . "ColorVal:" . rgbColors[vWhichColor] . "`n"
-		CTLCOLORS.Attach(%WhichText%, rgbColors[vWhichColor], "")
+		OutputDebug, % "WhichText:" . WhichText . "|" . "%WhichText%:" . %WhichText% . "|" . "ColorArg:" . vWhichColor . "|" . "ColorVal:" . rgbColors[vWhichColor] . "`n"
+		CTLCOLORS.Change(%WhichText%, rgbColors[vWhichColor], "")
 	}
 	; OutputDebug, % A_ThisFunc . "`n"
 }
-
-
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 F_InitiateInputHook()
 {
