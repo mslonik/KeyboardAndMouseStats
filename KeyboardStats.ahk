@@ -31,8 +31,9 @@ F_GuiDefine_Keybs()
 ,	Counter_A := 0
 ,	Counter_LShift := 0
 
-return
+F_InitiateInputHook()
 
+return
 ; = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 ; end of initialization
 ; = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
@@ -49,3 +50,46 @@ return
 	OverallCounter++
 	OutputDebug, % "Counter_LShift:" . Counter_LShift . A_Space . "OverallCounter:" . OverallCounter . "`n"
 return
+
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - FUNCTIONS BLOCK
+F_InitiateInputHook()	;why InputHook: to process triggerstring tips.
+{
+	global	;assume-global mode of operation
+	v_InputH 				:= InputHook("V L0")			
+; ,	v_InputH.MinSendLevel 	:= ini_MinSendLevel			;I1 by default
+; ,	v_InputH.OnChar 		:= Func("F_OneCharPressed")
+; ,	v_InputH.OnKeyDown		:= Func("F_OnKeyDown")
+,	v_InputH.OnKeyUp 		:= Func("F_InputHookOnKeyUp")	;this function is run whenever Backspace key or LShift or RShift is up 
+,	v_InputH.OnEnd			:= Func("F_InputHookOnEnd")
+	; v_InputH.KeyOpt("{Backspace}{LShift}{RShift}", "N")				;Backspace is not Char ;N: Notify. Causes the OnKeyDown and OnKeyUp callbacks to be called each time the key is pressed.
+	v_InputH.Start()
+	; OutputDebug, % A_ThisFunc . A_Space . "ini_MinSendLevel:" . ini_MinSendLevel . "|" . A_Space . v_InputH.MinSendLevel . "`n"
+}
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+F_InputHookOnKeyUp(ih, VK, SC)	;this function is run whenever Backspace key or LShift or RShift is up 
+{
+	global	;assume-global mode of operation
+	Critical, On
+	local	WhatWasUp := GetKeyName(Format("vk{:x}sc{:x}", VK, SC))
+
+	Critical, Off
+	; OutputDebug, % A_ThisFunc . A_Space . WhatWasUp . A_Space . "E" . "`n"
+}
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+F_InputHookOnEnd(ih)	;for debugging purposes
+{
+	global	;assume-global mode of operation
+	local 	KeyName 	:= ih.EndKey, Reason	:= ih.EndReason
+
+	; if (ini_THLog)	
+	; 	FileAppend, % A_Hour . ":" . A_Min . ":" . A_Sec . "|" . ++v_LogCounter . "|" . "OnEnd" . "|" . KeyName 
+	; 		. "|" . "GetKeyName:" 	. "|" . GetKeyName(KeyName) 
+	; 		. "|" . "GetKeyVK:" 	. "|" . GetKeyVK(KeyName)
+	; 		. "|" . "GetKeySC:" 	. "|" . GetKeySC(KeyName)
+	; 		. "|" . "EndReason:"	. "|" . Reason
+	; 		. "|" . "`n", % v_LogFileName
+
+	if (Reason = "Max")
+		ih.Start()
+}
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
