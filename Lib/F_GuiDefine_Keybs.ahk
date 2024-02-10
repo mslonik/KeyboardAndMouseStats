@@ -286,8 +286,8 @@ F_GuiDefine_Keybs()
 
 	Gui, KeybS: Add
 		, 	Text
-		,	x+5 HwndKeybS_Tsemicolon   Border
-		,	% "  ""  "	;must be escaped
+		,	x+5 HwndKeybS_TApostrophe   Border
+		,	% "  '  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -337,12 +337,12 @@ F_GuiDefine_Keybs()
 
 	Gui, KeybS: Add
 		, 	Text
-		,	x+5 HwndKeybS_TPeriod   Border
+		,	x+5 HwndKeybS_TComma   Border
 		,	% "  ,  "
 
 	Gui, KeybS: Add
 		, 	Text
-		,	x+5 HwndKeybS_TComa   Border
+		,	x+5 HwndKeybS_TDot   Border
 		,	% "  .  "
 
 	Gui, KeybS: Add
@@ -404,7 +404,7 @@ F_GuiDefine_Keybs()
 		,	Text
 		,	% "x" . vControlPosX + vControlPosW + 3 * vXm . A_Space 
 		. "y" . vControlPosY . A_Space 
-		. "HwndKeybS_TPrtScr Border"
+		. "HwndKeybS_TPrintScreen Border"
 		,	% " PS  "		;PrtScr (Print Screen)
 
 	Gui, KeybS: Add
@@ -419,7 +419,7 @@ F_GuiDefine_Keybs()
 
 	;middle island, second raw (3 keys) 
 	GuiControlGet, vControlPos, Pos
-		, 	% KeybS_TPrtScr
+		, 	% KeybS_TPrintScreen
 
 	Gui, KeybS: Add
 		, 	Text

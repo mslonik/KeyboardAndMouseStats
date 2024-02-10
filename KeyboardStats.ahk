@@ -27,18 +27,48 @@ FileEncoding, 			UTF-16		; Sets the default encoding for FileRead, FileReadLine,
 #include %A_ScriptDir%\Lib\ctcolors.ahk
 
 F_GuiDefine_Keybs()
+OnMessage(0x06, "WM_ACTIVATE")  ; Register callback F_WM_ACTIVATE to Windows Message WM_ACTIVATE := 0x0006
 	vOverallCounter := 0
 ,	aKeyboardCounters := {} 
 F_InitiateInputHook()
 v_InputH.Start()
-
 return
 ; = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 ; end of initialization
 ; = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
-
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - FUNCTIONS BLOCK
+; Gui +LastFound  ; Ensure the next GUI event applies to the last found GUI window
+
+WM_ACTIVATE(wParam, lParam) 
+; msg: The `msg` parameter is typically used to represent the message identifier. However, in the case of `OnMessage()`, AutoHotkey already knows which message we're handling because we specify it explicitly when registering the message handler. Therefore, there's no need to pass `msg` as a parameter to the user-defined function.
+; hwnd: The `hwnd` parameter represents the handle of the window that received the message. In the case of `OnMessage()`, the `hwnd` is implicit and is not passed as a parameter to the user-defined function. Instead, the `hwnd` is available within the `WM_ACTIVATE` function as `lParam`. 
+; - `wParam`: This parameter typically carries additional information about the message being sent. In the case of the `WM_ACTIVATE` message, `wParam` indicates the activation state of the window. Specifically:
+;   - `wParam = 1` indicates that the window is being activated.
+;   - `wParam = 2` indicates that the window is being deactivated.
+; - `lParam`: This parameter carries additional information specific to the message being sent. For the `WM_ACTIVATE` message, `lParam` contains the handle (HWND) of the window being activated or deactivated.
+; https://learn.microsoft.com/en-us/windows/win32/inputdev/wm-activate
+{
+	global	;assume-global mode of operation
+	Critical, On
+	; OutputDebug, % A_ThisFunc . "|" . "wParam:" . wParam . "|" . "lParam:" . lParam . "`n"
+	; Check if the GUI window is being activated
+	if ((wParam = 1) || (wParam = 2))
+	{  ; wParam 1 = activated by mouse, 2 = activated by keyboard ;for some reasons the lparam is always returned as null. In official Microsoft documentation: "This handle can be NULL." without any further explanation.
+		if WinActive(("ahk_id" KeybSHwnd))		; Check if the GUI window is active
+          	YourFunctionName()  ; Call your function when the specified GUI window is selected
+    	}
+	return 0
+}
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+YourFunctionName() 
+{
+	OutputDebug, % A_ThisFunc . "`n"
+	; HwndKeybS_TA
+}
+
+
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 F_InitiateInputHook()
 {
 	global	;assume-global mode of operation
@@ -58,18 +88,32 @@ F_InputHookOnKeyUp(ih, VK, SC)	;this function is run whenever Backspace key or L
 	Critical, On
 	local	WhatWasUp := GetKeyName(Format("vk{:x}sc{:x}", VK, SC))
 
+	OutputDebug, % "WhatWasUp:" . WhatWasUp . "`n"
 	vOverallCounter++
-	NewVariableName := "KC_" . WhatWasUp	; Create a variable name dynamically based on WhatWasUp and assign it a value; KC = KeyCounter
+	NewVariableName := ""
+	Switch, WhatWasUp
+	{
+		Case "``":	NewVariableName := "KC_" . "Backtick"
+		Case "-":		NewVariableName := "KC_" . "Minus"
+		Case "=":		NewVariableName := "KC_" . "Equals"
+		Case "[":		NewVariableName := "KC_" . "SquareBracket1"
+		Case "]":		NewVariableName := "KC_" . "SquareBracket2"
+		Case "\":		NewVariableName := "KC_" . "Backslash"
+		Case ";":		NewVariableName := "KC_" . "Semicolon"
+		Case "'":		NewVariableName := "KC_" . "Apostrophe"
+		Case ",":		NewVariableName := "KC_" . "Comma"
+		Case ".":		NewVariableName := "KC_" . "Dot"
+		Case "/":		NewVariableName := "KC_" . "Slash"
+		Default:		NewVariableName := "KC_" . WhatWasUp	; Create a variable name dynamically based on WhatWasUp and assign it a value; KC = KeyCounter
+	}
+	OutputDebug, % "NewVariableName:" . NewVariableName . "`n"
+	
 	if (!IsSet(%NewVariableName%))
 	{
 		%NewVariableName% := 0
 		aKeyboardCounters.Push(SubStr(NewVariableName, 4)) 
 	}
 	%NewVariableName%++
-	OutputDebug, % "WhatWasUp:" . WhatWasUp . "|" . "NewVariableName:" . NewVariableName . "|" . "%NewVariableName%:" . %NewVariableName%  . "`n"
-
-	; HwndKeybS_TA
-
 	Critical, Off
 }
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
