@@ -90,10 +90,28 @@ F_WM_ACTIVATE(wParam, lParam) ; Check if the GUI window is being activated
 	if ((wParam = 1) || (wParam = 2))
 	{  ; wParam 1 = activated by mouse, 2 = activated by keyboard ;for some reasons the lparam is always returned as null. In official Microsoft documentation: "This handle can be NULL." without any further explanation.
 		if WinActive(("ahk_id" KeybSHwnd))		; Check if the GUI window is active
+		{
           	F_ColorGuiKeys()  ; Call your function when the specified GUI window is selected
+			F_UpdateDateTimeCounter()
+		}
     	}
 	return 0	;documentation says about it
 }
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+F_UpdateDateTimeCounter()
+{
+	global	;assume-global mode of operation
+
+	GuiControl, 
+		, % Date							;HWND identifier of text control
+		, % A_Year . "-" . A_MM . "-" . A_DD	;update the date
+	GuiControl, 
+		, % Time							;HWND identifier of text control
+		, % A_Hour . ":" . A_Min . ":" . A_Sec	;update the time
+	GuiControl, 
+		, % OvCount						;HWND identifier of text control
+		, % vOverallCounter					;update total counter value
+} 
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 F_ColorGuiKeys() 
 {
@@ -104,16 +122,6 @@ F_ColorGuiKeys()
 		,	vWhichColor 	:= 0
 		,	WhichText		:= ""
 		,	MaxVal		:= 0
-
-	GuiControl, 
-		, % Date
-		, % A_Year . "-" . A_MM . "-" . A_DD	;update the date
-	GuiControl, 
-		, % Time
-		, % A_Hour . ":" . A_Min . ":" . A_Sec	;update the time
-	GuiControl, 
-		, % OvCount
-		, % vOverallCounter					;update total counter value
 
 	for index in aKeyboardCounters	;search for maximum value
 	{
