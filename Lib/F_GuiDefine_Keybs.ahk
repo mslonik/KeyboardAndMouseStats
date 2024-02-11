@@ -915,6 +915,39 @@ F_GuiDefine_Keybs()
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TLeft
 	aHWNDToVariable[HWNDaddress] := "KeybS_TLeft"
 
+	;date
+	GuiControlGet, vControlPos, Pos
+		, 	% KeybS_TMode
+	Gui, KeybS: Add
+		, 	Text
+		,	% "x" . vControlPosX + vControlPosW + 10 . A_Space . "y" . vControlPosY . A_Space
+		. 	"Hwnd" . "Date"  . A_Space 
+		; . 	"Border" . A_Space 
+		; .	"g" . "F_OnText"
+		,	% A_Year . "-" . A_MM . "-" . A_DD
+
+	;time
+	GuiControlGet, vControlPos, Pos
+		, 	% KeybS_TPgUp
+	Gui, KeybS: Add
+		, 	Text
+		,	% "x" . vControlPosX + vControlPosW + 10 . A_Space . "y" . vControlPosY . A_Space
+		. 	"Hwnd" . "Time"  . A_Space 
+		; . 	"Border" . A_Space 
+		; .	"g" . "F_OnText"
+		,	% A_Hour . ":" . A_Min . ":" . A_Sec
+
+	;overall counter value, all key presses since start
+	GuiControlGet, vControlPos, Pos
+		, 	% KeybS_TRight
+	Gui, KeybS: Add
+		, 	Text
+		,	% "x" . vControlPosX + vControlPosW + 25 . A_Space . "y" . vControlPosY . A_Space
+		. 	"Hwnd" . "OvCount"  . A_Space 
+		; . 	"Border" . A_Space 
+		; .	"g" . "F_OnText"
+		,	% "99 999" 
+
 	F_ColorScale()
 
 	Gui, KeybS: Show

@@ -42,7 +42,7 @@ return
 ; = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - FUNCTIONS BLOCK
-F_OnText()
+F_OnText()	;when text control is clicked with mouse
 {
 	global	;assume-global mode of operation
 	local	vHWND 	:= 0
@@ -75,7 +75,7 @@ F_RemoveToolTip()
 	Tooltip							;with no arguments just hides the tooltips
 } 
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-F_WM_ACTIVATE(wParam, lParam) 
+F_WM_ACTIVATE(wParam, lParam) ; Check if the GUI window is being activated
 ; msg: The `msg` parameter is typically used to represent the message identifier. However, in the case of `OnMessage()`, AutoHotkey already knows which message we're handling because we specify it explicitly when registering the message handler. Therefore, there's no need to pass `msg` as a parameter to the user-defined function.
 ; hwnd: The `hwnd` parameter represents the handle of the window that received the message. In the case of `OnMessage()`, the `hwnd` is implicit and is not passed as a parameter to the user-defined function. Instead, the `hwnd` is available within the `WM_ACTIVATE` function as `lParam`. 
 ; - `wParam`: This parameter typically carries additional information about the message being sent. In the case of the `WM_ACTIVATE` message, `wParam` indicates the activation state of the window. Specifically:
@@ -87,7 +87,6 @@ F_WM_ACTIVATE(wParam, lParam)
 	global	;assume-global mode of operation
 	Critical, On	;documentation says about it
 	; OutputDebug, % A_ThisFunc . "|" . "wParam:" . wParam . "|" . "lParam:" . lParam . "`n"
-	; Check if the GUI window is being activated
 	if ((wParam = 1) || (wParam = 2))
 	{  ; wParam 1 = activated by mouse, 2 = activated by keyboard ;for some reasons the lparam is always returned as null. In official Microsoft documentation: "This handle can be NULL." without any further explanation.
 		if WinActive(("ahk_id" KeybSHwnd))		; Check if the GUI window is active
@@ -105,6 +104,16 @@ F_ColorGuiKeys()
 		,	vWhichColor 	:= 0
 		,	WhichText		:= ""
 		,	MaxVal		:= 0
+
+	GuiControl, 
+		, % Date
+		, % A_Year . "-" . A_MM . "-" . A_DD	;update the date
+	GuiControl, 
+		, % Time
+		, % A_Hour . ":" . A_Min . ":" . A_Sec	;update the time
+	GuiControl, 
+		, % OvCount
+		, % vOverallCounter					;update total counter value
 
 	for index in aKeyboardCounters	;search for maximum value
 	{
@@ -128,7 +137,6 @@ F_ColorGuiKeys()
 		; OutputDebug, % "WhichText:" . WhichText . "|" . "%WhichText%:" . %WhichText% . "|" . "ColorArg:" . vWhichColor . "|" . "ColorVal:" . rgbColors[vWhichColor] . "`n"
 		CTLCOLORS.Change(%WhichText%, rgbColors[vWhichColor], "")
 	}
-	; OutputDebug, % A_ThisFunc . "`n"
 }
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 F_InitiateInputHook()
