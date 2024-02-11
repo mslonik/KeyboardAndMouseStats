@@ -28,598 +28,743 @@ F_GuiDefine_Keybs()
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  ⎋  "	;escape key
-
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TEscape
 	aHWNDToVariable[HWNDaddress] := "KeybS_TEscape"
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+25" . A_Space 
-		. 	"HwndKeybS_TF1" . A_Space 
+		. 	"Hwnd" . "KeybS_TF1" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% " F1  "	
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TF1
+	aHWNDToVariable[HWNDaddress] := "KeybS_TF1"
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TF2" . A_Space 
+		. 	"Hwnd" . "KeybS_TF2" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% " F2  "	
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TF2
+	aHWNDToVariable[HWNDaddress] := "KeybS_TF2"
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TF3" . A_Space 
+		. 	"Hwnd" . "KeybS_TF3" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% " F3  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TF3
+	aHWNDToVariable[HWNDaddress] := "KeybS_TF3"
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TF4" . A_Space 
+		. 	"Hwnd" . "KeybS_TF4" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% " F4  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TF4
+	aHWNDToVariable[HWNDaddress] := "KeybS_TF4"
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+25" . A_Space 
-		. 	"HwndKeybS_TF5" . A_Space 
+		. 	"Hwnd" . "KeybS_TF5" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% " F5  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TF5
+	aHWNDToVariable[HWNDaddress] := "KeybS_TF5"
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TF6" . A_Space 
+		. 	"Hwnd" . "KeybS_TF6" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% " F6  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TF6
+	aHWNDToVariable[HWNDaddress] := "KeybS_TF6"
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TF7" . A_Space 
+		. 	"Hwnd" . "KeybS_TF7" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% " F7  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TF7
+	aHWNDToVariable[HWNDaddress] := "KeybS_TF7"
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+5" . A_Space 
-		.  	"HwndKeybS_TF8" . A_Space 
+		.  	"Hwnd" . "KeybS_TF8" . A_Space 
 		.	"Border" . A_Space
 		.	"g" . "F_OnText"
 		,	% " F8  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TF8
+	aHWNDToVariable[HWNDaddress] := "KeybS_TF8"
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+25" . A_Space 
-		.	"HwndKeybS_TF9" . A_Space 
+		.	"Hwnd" . "KeybS_TF9" . A_Space 
 		.	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% " F9  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TF9
+	aHWNDToVariable[HWNDaddress] := "KeybS_TF9"
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TF10" . A_Space 
+		. 	"Hwnd" . "KeybS_TF10" . A_Space 
 		.	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% " F10 "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TF10
+	aHWNDToVariable[HWNDaddress] := "KeybS_TF10"
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TF11" . A_Space 
+		. 	"Hwnd" . "KeybS_TF11" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% " F11 "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TF11
+	aHWNDToVariable[HWNDaddress] := "KeybS_TF11"
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TF12" . A_Space 
+		. 	"Hwnd" . "KeybS_TF12" . A_Space 
 		.	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% " F12 "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TF12
+	aHWNDToVariable[HWNDaddress] := "KeybS_TF12"
 
 	; raw 1 (14 keys) 
 	Gui, KeybS: Add
 		,	Text
 		,	% "xm" . A_Space . "y+10" . A_Space 
-		.	"HwndKeybS_TBacktick" . A_Space 
+		.	"Hwnd" . "KeybS_TBacktick" . A_Space 
 		.	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  ``  "	;backtick must be escaped
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TBacktick
+	aHWNDToVariable[HWNDaddress] := "KeybS_TBacktick"
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+6" . A_Space 
-		.	"HwndKeybS_T1" . A_Space 
+		.	"Hwnd" . "KeybS_T1" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  1  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_T1
+	aHWNDToVariable[HWNDaddress] := "KeybS_T1"
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+6" . A_Space 
-		.	"HwndKeybS_T2" . A_Space 
+		.	"Hwnd" . "KeybS_T2" . A_Space 
 		.	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  2  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_T2
+	aHWNDToVariable[HWNDaddress] := "KeybS_T2"
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+6" . A_Space 
-		.	"HwndKeybS_T3" . A_Space 
+		.	"Hwnd" . "KeybS_T3" . A_Space 
 		.	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  3  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_T3
+	aHWNDToVariable[HWNDaddress] := "KeybS_T3"
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+6" . A_Space 
-		. 	"HwndKeybS_T4" . A_Space 
+		. 	"Hwnd" . "KeybS_T4" . A_Space 
 		.	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  4  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_T4
+	aHWNDToVariable[HWNDaddress] := "KeybS_T4"
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+6" . A_Space 
-		.	"HwndKeybS_T5" . A_Space 
+		.	"Hwnd" . "KeybS_T5" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  5  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_T5
+	aHWNDToVariable[HWNDaddress] := "KeybS_T5"
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+6" . A_Space 
-		. 	"HwndKeybS_T6" . A_Space 
+		. 	"Hwnd" . "KeybS_T6" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  6  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_T6
+	aHWNDToVariable[HWNDaddress] := "KeybS_T6"
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+6" . A_Space 
-		. 	"HwndKeybS_T7" . A_Space 
+		. 	"Hwnd" . "KeybS_T7" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  7  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_T7
+	aHWNDToVariable[HWNDaddress] := "KeybS_T7"
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+6" . A_Space 
-		. 	"HwndKeybS_T8" . A_Space 
+		. 	"Hwnd" . "KeybS_T8" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  8  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_T8
+	aHWNDToVariable[HWNDaddress] := "KeybS_T8"
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+6" . A_Space 
-		. 	"HwndKeybS_T9" . A_Space 
+		. 	"Hwnd" . "KeybS_T9" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  9  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_T9
+	aHWNDToVariable[HWNDaddress] := "KeybS_T9"
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+6" . A_Space 
-		. 	"HwndKeybS_T0" . A_Space 
+		. 	"Hwnd" . "KeybS_T0" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  0  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_T0
+	aHWNDToVariable[HWNDaddress] := "KeybS_T0"
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+6" . A_Space 
-		. 	"HwndKeybS_TMinus" . A_Space 
+		. 	"Hwnd" . "KeybS_TMinus" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  -  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TMinus
+	aHWNDToVariable[HWNDaddress] := "KeybS_TMinus"
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+6" . A_Space 
-		. 	"HwndKeybS_TEquals" . A_Space 
+		. 	"Hwnd" . "KeybS_TEquals" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  =  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TEquals
+	aHWNDToVariable[HWNDaddress] := "KeybS_TEquals"
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+6" . A_Space 
-		. 	"HwndKeybS_TBackspace" . A_Space 
+		. 	"Hwnd" . "KeybS_TBackspace" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  ←   "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TBackspace
+	aHWNDToVariable[HWNDaddress] := "KeybS_TBackspace"
 
 	; raw 2 (14 keys) 
 	Gui, KeybS: Add
 		,	Text
 		,	% "xm" . A_Space . "y+5" . A_Space 
-		. 	"HwndKeybS_TTab" . A_Space 
+		. 	"Hwnd" . "KeybS_TTab" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "   ⭾  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TTab
+	aHWNDToVariable[HWNDaddress] := "KeybS_TTab"
 
 	Gui, KeybS: Add
 		, 	Text
 		,   	% "x+5" . A_Space 
-		. 	"HwndKeybS_TQ" . A_Space 
+		. 	"Hwnd" . "KeybS_TQ" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  Q  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TQ
+	aHWNDToVariable[HWNDaddress] := "KeybS_TQ"
 
 	Gui, KeybS: Add
 		, 	Text
 		,   	% "x+5" . A_Space 
-		. 	"HwndKeybS_TW" . A_Space 
+		. 	"Hwnd" . "KeybS_TW" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  W  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TW
+	aHWNDToVariable[HWNDaddress] := "KeybS_TW"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		.	"HwndKeybS_TE" . A_Space 
+		.	"Hwnd" . "KeybS_TE" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  E  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TE
+	aHWNDToVariable[HWNDaddress] := "KeybS_TE"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		.  	"HwndKeybS_TR" . A_Space 
+		.  	"Hwnd" . "KeybS_TR" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  R  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TR
+	aHWNDToVariable[HWNDaddress] := "KeybS_TR"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TT" . A_Space 
+		. 	"Hwnd" . "KeybS_TT" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  T  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TT
+	aHWNDToVariable[HWNDaddress] := "KeybS_TT"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TY" . A_Space 
+		. 	"Hwnd" . "KeybS_TY" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  Y  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TY
+	aHWNDToVariable[HWNDaddress] := "KeybS_TY"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TU" . A_Space 
+		. 	"Hwnd" . "KeybS_TU" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  U  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TU
+	aHWNDToVariable[HWNDaddress] := "KeybS_TU"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TI" . A_Space 
+		. 	"Hwnd" . "KeybS_TI" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  I  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TI
+	aHWNDToVariable[HWNDaddress] := "KeybS_TI"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TO" . A_Space 
+		. 	"Hwnd" . "KeybS_TO" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  O  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TO
+	aHWNDToVariable[HWNDaddress] := "KeybS_TO"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TP" . A_Space 
+		. 	"Hwnd" . "KeybS_TP" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  P  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TP
+	aHWNDToVariable[HWNDaddress] := "KeybS_TP"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TSquareBracket1" . A_Space 
+		. 	"Hwnd" . "KeybS_TSquareBracket1" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  [  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TSquareBracket1
+	aHWNDToVariable[HWNDaddress] := "KeybS_TSquareBracket1"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TSquareBracket2" . A_Space 
+		. 	"Hwnd" . "KeybS_TSquareBracket2" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  ]  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TSquareBracket2
+	aHWNDToVariable[HWNDaddress] := "KeybS_TSquareBracket2"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TBackslash" . A_Space 
+		. 	"Hwnd" . "KeybS_TBackslash" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "   \  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TBackslash
+	aHWNDToVariable[HWNDaddress] := "KeybS_TBackslash"
 
 	;raw 3 (13 keys)
 	Gui, KeybS: Add
 		, 	Text
 		,	% "xm" . A_Space . "y+5" . A_Space 
-		. 	"HwndKeybS_TCapslock" . A_Space 
+		. 	"Hwnd" . "KeybS_TCapslock" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "   ⇪   "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TCapslock
+	aHWNDToVariable[HWNDaddress] := "KeybS_TCapslock"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TA" . A_Space 
+		. 	"Hwnd" . "KeybS_TA" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  A  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TA
+	aHWNDToVariable[HWNDaddress] := "KeybS_TA"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TS" . A_Space 
+		. 	"Hwnd" . "KeybS_TS" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  S  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TS
+	aHWNDToVariable[HWNDaddress] := "KeybS_TS"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TD" . A_Space 
+		. 	"Hwnd" . "KeybS_TD" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  D  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TD
+	aHWNDToVariable[HWNDaddress] := "KeybS_TD"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TF" . A_Space 
+		. 	"Hwnd" . "KeybS_TF" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  F  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TF
+	aHWNDToVariable[HWNDaddress] := "KeybS_TF"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TG" . A_Space 
+		. 	"Hwnd" . "KeybS_TG" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  G  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TG
+	aHWNDToVariable[HWNDaddress] := "KeybS_TG"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TH" . A_Space 
+		. 	"Hwnd" . "KeybS_TH" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  H  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TH
+	aHWNDToVariable[HWNDaddress] := "KeybS_TH"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TJ" . A_Space 
+		. 	"Hwnd" . "KeybS_TJ" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  J  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TJ
+	aHWNDToVariable[HWNDaddress] := "KeybS_TJ"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TK" . A_Space 
+		. 	"Hwnd" . "KeybS_TK" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  K  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TK
+	aHWNDToVariable[HWNDaddress] := "KeybS_TK"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TL" . A_Space 
+		. 	"Hwnd" . "KeybS_TL" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  L  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TL
+	aHWNDToVariable[HWNDaddress] := "KeybS_TL"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_Tsemicolon" . A_Space 
+		. 	"Hwnd" . "KeybS_Tsemicolon" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  `;  "	;semicolon must be escaped in such circumstances
+	GuiControlGet, HWNDaddress, HWND, % KeybS_Tsemicolon
+	aHWNDToVariable[HWNDaddress] := "KeybS_Tsemicolon"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TApostrophe" . A_Space 
+		. 	"Hwnd" . "KeybS_TApostrophe" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  '  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TApostrophe
+	aHWNDToVariable[HWNDaddress] := "KeybS_TApostrophe"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TEnter" . A_Space 
+		. 	"Hwnd" . "KeybS_TEnter" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "     ↵     "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TEnter
+	aHWNDToVariable[HWNDaddress] := "KeybS_TEnter"
 
 	;raw 4 (12 keys)
 	Gui, KeybS: Add
 		, 	Text
 		,	% "xm" . A_Space . "y+5" . A_Space 
-		. 	"HwndKeybS_TLShift" . A_Space 
+		. 	"Hwnd" . "KeybS_TLShift" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "     ⇧    "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TLShift
+	aHWNDToVariable[HWNDaddress] := "KeybS_TLShift"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TZ" . A_Space 
+		. 	"Hwnd" . "KeybS_TZ" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  Z  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TZ
+	aHWNDToVariable[HWNDaddress] := "KeybS_TZ"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TX" . A_Space 
+		. 	"Hwnd" . "KeybS_TX" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  X  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TX
+	aHWNDToVariable[HWNDaddress] := "KeybS_TX"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TC" . A_Space 
+		. 	"Hwnd" . "KeybS_TC" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  C  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TC
+	aHWNDToVariable[HWNDaddress] := "KeybS_TC"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TB" . A_Space 
+		. 	"Hwnd" . "KeybS_TB" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  B  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TB
+	aHWNDToVariable[HWNDaddress] := "KeybS_TB"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TV" . A_Space 
+		. 	"Hwnd" . "KeybS_TV" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  B  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TV
+	aHWNDToVariable[HWNDaddress] := "KeybS_TV"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TN" . A_Space 
+		. 	"Hwnd" . "KeybS_TN" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  N  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TN
+	aHWNDToVariable[HWNDaddress] := "KeybS_TN"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TM" . A_Space 
+		. 	"Hwnd" . "KeybS_TM" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  M  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TM
+	aHWNDToVariable[HWNDaddress] := "KeybS_TM"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TComma" . A_Space 
+		. 	"Hwnd" . "KeybS_TComma" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  ,  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TComma
+	aHWNDToVariable[HWNDaddress] := "KeybS_TComma"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TDot" . A_Space 
+		. 	"Hwnd" . "KeybS_TDot" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  .  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TDot
+	aHWNDToVariable[HWNDaddress] := "KeybS_TDot"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TSlash" . A_Space 
+		. 	"Hwnd" . "KeybS_TSlash" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  /  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TSlash
+	aHWNDToVariable[HWNDaddress] := "KeybS_TSlash"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TRShift" . A_Space 
+		. 	"Hwnd" . "KeybS_TRShift" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "      ⇧       "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TRShift
+	aHWNDToVariable[HWNDaddress] := "KeybS_TRShift"
 
 	;raw 5 (8 keys)
 	Gui, KeybS: Add
 		, 	Text
 		,	% "xm" . A_Space . "y+5" . A_Space 
-		. 	"HwndKeybS_TLControl" . A_Space 
+		. 	"Hwnd" . "KeybS_TLControl" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "   ⎈  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TLControl
+	aHWNDToVariable[HWNDaddress] := "KeybS_TLControl"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TLWin" . A_Space 
+		. 	"Hwnd" . "KeybS_TLWin" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "   ⊞  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TLWin
+	aHWNDToVariable[HWNDaddress] := "KeybS_TLWin"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TLAlt" . A_Space 
+		. 	"Hwnd" . "KeybS_TLAlt" . A_Space 
 		.	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "   ⎇  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TLAlt
+	aHWNDToVariable[HWNDaddress] := "KeybS_TLAlt"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		.	"HwndKeybS_TSpace" . A_Space 
+		.	"Hwnd" . "KeybS_TSpace" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "                ␣                 "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TSpace
+	aHWNDToVariable[HWNDaddress] := "KeybS_TSpace"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TRAlt" . A_Space 
+		. 	"Hwnd" . "KeybS_TRAlt" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "   ⎇  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TRAlt
+	aHWNDToVariable[HWNDaddress] := "KeybS_TRAlt"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TRWin" . A_Space 
+		. 	"Hwnd" . "KeybS_TRWin" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "   ⊞  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TRWin
+	aHWNDToVariable[HWNDaddress] := "KeybS_TRWin"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TFn" . A_Space 
+		. 	"Hwnd" . "KeybS_TFn" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  Fn  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TFn
+	aHWNDToVariable[HWNDaddress] := "KeybS_TFn"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TRControl" . A_Space 
+		. 	"Hwnd" . "KeybS_TRControl" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "   ⎈  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TRControl
+	aHWNDToVariable[HWNDaddress] := "KeybS_TRControl"
 
 	;middle island, first row (3 keys) 
 	GuiControlGet,	vControlPos, Pos
@@ -628,26 +773,32 @@ F_GuiDefine_Keybs()
 	Gui, KeybS: Add
 		,	Text
 		,	% "x" . vControlPosX + vControlPosW + 3 * vXm . A_Space . "y" . vControlPosY . A_Space 
-		. 	"HwndKeybS_TPrintScreen" . A_Space 
+		. 	"Hwnd" . "KeybS_TPrintScreen" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% " PS  "		;PrtScr (Print Screen)
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TPrintScreen
+	aHWNDToVariable[HWNDaddress] := "KeybS_TPrintScreen"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TPause" . A_Space 
+		. 	"Hwnd" . "KeybS_TPause" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  Pe  "		;Pause
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TPause
+	aHWNDToVariable[HWNDaddress] := "KeybS_TPause"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TMode" . A_Space 
+		. 	"Hwnd" . "KeybS_TMode" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  Me  "		;Mode
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TMode
+	aHWNDToVariable[HWNDaddress] := "KeybS_TMode"
 
 	;middle island, second raw (3 keys) 
 	GuiControlGet, vControlPos, Pos
@@ -656,26 +807,32 @@ F_GuiDefine_Keybs()
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x" . vControlPosX . A_Space . "y" . vControlPosY + vControlPosH + 10 . A_Space 
-		. 	"HwndKeybS_TInsert" . A_Space 
+		. 	"Hwnd" . "KeybS_TInsert" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% " Ins "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TInsert
+	aHWNDToVariable[HWNDaddress] := "KeybS_TInsert"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_THome" . A_Space 
+		. 	"Hwnd" . "KeybS_THome" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  ⇱   "		;Home
+	GuiControlGet, HWNDaddress, HWND, % KeybS_THome
+	aHWNDToVariable[HWNDaddress] := "KeybS_THome"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TPgUp" . A_Space 
+		. 	"Hwnd" . "KeybS_TPgUp" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  PU  "		;Page Up
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TPgUp
+	aHWNDToVariable[HWNDaddress] := "KeybS_TPgUp"
 
 	;middle island, third raw (3 keys) 
 	GuiControlGet, vControlPos, Pos
@@ -684,26 +841,32 @@ F_GuiDefine_Keybs()
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x" . vControlPosX . A_Space . "y" . vControlPosY + vControlPosH + 5 . A_Space 
-		. 	"HwndKeybS_TDelete" . A_Space 
+		. 	"Hwnd" . "KeybS_TDelete" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% " Del "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TDelete
+	aHWNDToVariable[HWNDaddress] := "KeybS_TDelete"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TEnd" . A_Space 
+		. 	"Hwnd" . "KeybS_TEnd" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  ⇲   "		;Home
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TEnd
+	aHWNDToVariable[HWNDaddress] := "KeybS_TEnd"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TPgDn" . A_Space 
+		. 	"Hwnd" . "KeybS_TPgDn" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  PD  "		;Home
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TPgDn
+	aHWNDToVariable[HWNDaddress] := "KeybS_TPgDn"
 
 	;cursors (4 keys) 
 	GuiControlGet, vControlPos, Pos
@@ -712,26 +875,32 @@ F_GuiDefine_Keybs()
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x" . vControlPosX + 3 . A_Space . "y" . vControlPosY + vControlPosH * 2 + 5 * 2 . A_Space 
-		. 	"HwndKeybS_TUp" . A_Space 
+		. 	"Hwnd" . "KeybS_TUp" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  ↑  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TUp
+	aHWNDToVariable[HWNDaddress] := "KeybS_TUp"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "y+5" . A_Space 
-		. 	"HwndKeybS_TDown" . A_Space 
+		. 	"Hwnd" . "KeybS_TDown" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  ↓  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TDown
+	aHWNDToVariable[HWNDaddress] := "KeybS_TDown"
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TRight" . A_Space 
+		. 	"Hwnd" . "KeybS_TRight" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  →  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TRight
+	aHWNDToVariable[HWNDaddress] := "KeybS_TRight"
 
 	GuiControlGet, vControlPos, Pos
 		, 	% KeybS_TRight
@@ -739,10 +908,12 @@ F_GuiDefine_Keybs()
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+-" . vControlPosW * 3 + 12 . A_Space 
-		. 	"HwndKeybS_TLeft"  . A_Space 
+		. 	"Hwnd" . "KeybS_TLeft"  . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  ←  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TLeft
+	aHWNDToVariable[HWNDaddress] := "KeybS_TLeft"
 
 	F_ColorScale()
 
