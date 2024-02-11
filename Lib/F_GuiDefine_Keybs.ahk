@@ -24,91 +24,104 @@ F_GuiDefine_Keybs()
 	Gui, KeybS: Add
 		,	Text
 		,	% "HwndKeybS_TEscape" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  ⎋  "	;escape key
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+25" . A_Space 
 		. 	"HwndKeybS_TF1" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% " F1  "	
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TF2" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% " F2  "	
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TF3" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% " F3  "
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TF4" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% " F4  "
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+25" . A_Space 
 		. 	"HwndKeybS_TF5" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% " F5  "
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TF6" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% " F6  "
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TF7" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% " F7  "
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+5" . A_Space 
 		.  	"HwndKeybS_TF8" . A_Space 
-		.	"Border"
+		.	"Border" . A_Space
+		.	"g" . "F_OnText"
 		,	% " F8  "
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+25" . A_Space 
 		.	"HwndKeybS_TF9" . A_Space 
-		.	"Border"
+		.	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% " F9  "
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TF10" . A_Space 
-		.	"Border"
+		.	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% " F10 "
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TF11" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% " F11 "
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TF12" . A_Space 
-		.	"Border"
+		.	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% " F12 "
 
 	; raw 1 (14 keys) 
@@ -116,98 +129,112 @@ F_GuiDefine_Keybs()
 		,	Text
 		,	% "xm" . A_Space . "y+10" . A_Space 
 		.	"HwndKeybS_TBacktick" . A_Space 
-		.	"Border"
+		.	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  ``  "	;backtick must be escaped
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+6" . A_Space 
 		.	"HwndKeybS_T1" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  1  "
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+6" . A_Space 
 		.	"HwndKeybS_T2" . A_Space 
-		.	"Border"
+		.	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  2  "
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+6" . A_Space 
 		.	"HwndKeybS_T3" . A_Space 
-		.	"Border"
+		.	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  3  "
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+6" . A_Space 
 		. 	"HwndKeybS_T4" . A_Space 
-		.	"Border"
+		.	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  4  "
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+6" . A_Space 
 		.	"HwndKeybS_T5" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  5  "
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+6" . A_Space 
 		. 	"HwndKeybS_T6" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  6  "
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+6" . A_Space 
 		. 	"HwndKeybS_T7" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  7  "
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+6" . A_Space 
 		. 	"HwndKeybS_T8" . A_Space 
-		. "Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  8  "
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+6" . A_Space 
 		. 	"HwndKeybS_T9" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  9  "
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+6" . A_Space 
 		. 	"HwndKeybS_T0" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  0  "
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+6" . A_Space 
 		. 	"HwndKeybS_TMinus" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  -  "
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+6" . A_Space 
 		. 	"HwndKeybS_TEquals" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  =  "
 
 	Gui, KeybS: Add
 		,	Text
 		,	% "x+6" . A_Space 
 		. 	"HwndKeybS_TBackspace" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  ←   "
 
 	; raw 2 (14 keys) 
@@ -215,98 +242,112 @@ F_GuiDefine_Keybs()
 		,	Text
 		,	% "xm" . A_Space . "y+5" . A_Space 
 		. 	"HwndKeybS_TTab" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "   ⭾  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,   	% "x+5" . A_Space 
 		. 	"HwndKeybS_TQ" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  Q  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,   	% "x+5" . A_Space 
 		. 	"HwndKeybS_TW" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  W  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		.	"HwndKeybS_TE" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  E  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		.  	"HwndKeybS_TR" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  R  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TT" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  T  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TY" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  Y  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TU" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  U  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TI" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  I  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TO" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  O  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TP" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  P  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TSquareBracket1" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  [  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TSquareBracket2" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  ]  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TBackslash" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "   \  "
 
 	;raw 3 (13 keys)
@@ -314,91 +355,104 @@ F_GuiDefine_Keybs()
 		, 	Text
 		,	% "xm" . A_Space . "y+5" . A_Space 
 		. 	"HwndKeybS_TCapslock" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "   ⇪   "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TA" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  A  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TS" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  S  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TD" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  D  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TF" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  F  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TG" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  G  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TH" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  H  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TJ" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  J  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TK" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  K  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TL" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  L  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_Tsemicolon" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  `;  "	;semicolon must be escaped in such circumstances
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TApostrophe" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  '  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TEnter" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "     ↵     "
 
 	;raw 4 (12 keys)
@@ -406,84 +460,96 @@ F_GuiDefine_Keybs()
 		, 	Text
 		,	% "xm" . A_Space . "y+5" . A_Space 
 		. 	"HwndKeybS_TLShift" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "     ⇧    "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TZ" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  Z  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TX" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  X  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TC" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  C  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TB" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  B  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TV" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  B  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TN" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  N  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TM" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  M  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TComma" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  ,  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TDot" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  .  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TSlash" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  /  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TRShift" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "      ⇧       "
 
 	;raw 5 (8 keys)
@@ -491,56 +557,64 @@ F_GuiDefine_Keybs()
 		, 	Text
 		,	% "xm" . A_Space . "y+5" . A_Space 
 		. 	"HwndKeybS_TLControl" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "   ⎈  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TLWindows" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "   ⊞  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TLAlt" . A_Space 
-		.	"Border"
+		.	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "   ⎇  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		.	"HwndKeybS_TSpace" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "                ␣                 "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TRAlt" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "   ⎇  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TRWindows" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "   ⊞  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TFn" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  Fn  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TRControl" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "   ⎈  "
 
 	;middle island, first row (3 keys) 
@@ -551,21 +625,24 @@ F_GuiDefine_Keybs()
 		,	Text
 		,	% "x" . vControlPosX + vControlPosW + 3 * vXm . A_Space . "y" . vControlPosY . A_Space 
 		. 	"HwndKeybS_TPrintScreen" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% " PS  "		;PrtScr (Print Screen)
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TPause" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  Pe  "		;Pause
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TMode" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  Me  "		;Mode
 
 	;middle island, second raw (3 keys) 
@@ -576,21 +653,24 @@ F_GuiDefine_Keybs()
 		, 	Text
 		,	% "x" . vControlPosX . A_Space . "y" . vControlPosY + vControlPosH + 10 . A_Space 
 		. 	"HwndKeybS_TInsert" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% " Ins "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_THome" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  ⇱   "		;Home
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TPgUp" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  PU  "		;Page Up
 
 	;middle island, third raw (3 keys) 
@@ -601,21 +681,24 @@ F_GuiDefine_Keybs()
 		, 	Text
 		,	% "x" . vControlPosX . A_Space . "y" . vControlPosY + vControlPosH + 5 . A_Space 
 		. 	"HwndKeybS_TDelete" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% " Del "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TEnd" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  ⇲   "		;Home
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TPgDn" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  PD  "		;Home
 
 	;cursors (4 keys) 
@@ -626,21 +709,24 @@ F_GuiDefine_Keybs()
 		, 	Text
 		,	% "x" . vControlPosX + 3 . A_Space . "y" . vControlPosY + vControlPosH * 2 + 5 * 2 . A_Space 
 		. 	"HwndKeybS_TUp" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  ↑  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "y+5" . A_Space 
 		. 	"HwndKeybS_TDown" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  ↓  "
 
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
 		. 	"HwndKeybS_TRight" . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  →  "
 
 	GuiControlGet, vControlPos, Pos
@@ -650,9 +736,9 @@ F_GuiDefine_Keybs()
 		, 	Text
 		,	% "x+-" . vControlPosW * 3 + 12 . A_Space 
 		. 	"HwndKeybS_TLeft"  . A_Space 
-		. 	"Border"
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
 		,	% "  ←  "
-
 
 	F_ColorScale()
 

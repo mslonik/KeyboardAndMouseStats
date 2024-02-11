@@ -29,9 +29,10 @@ FileEncoding, 			UTF-16		; Sets the default encoding for FileRead, FileReadLine,
 Critical, On
 F_GuiDefine_Keybs()
 Critical, Off
-OnMessage(0x06, "WM_ACTIVATE")  ; Register callback F_WM_ACTIVATE to Windows Message WM_ACTIVATE := 0x0006
-	vOverallCounter := 0
-,	aKeyboardCounters := {} 
+OnMessage(0x06, "F_WM_ACTIVATE")  	;register callback F_WM_ACTIVATE to Windows Message WM_ACTIVATE := 0x0006
+	vOverallCounter 	:= 0		;overall number of recorded keyboard keys which were up after pressing
+,	aKeyboardCounters 	:= {}	;array variable to store KC (key counters) 
+,	aHWNDToVariable 	:= {}	;array variable (associative) to store names of HWND variable names and HWND values (hexadecimal addresses)
 F_InitiateInputHook()
 v_InputH.Start()
 return
@@ -40,7 +41,17 @@ return
 ; = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - FUNCTIONS BLOCK
-WM_ACTIVATE(wParam, lParam) 
+F_OnText()
+{
+	global	;assume-global mode of operation
+	local	OutVar1 := 0
+
+	MouseGetPos, , , , OutVar1, 2	;OutVar1 contains HWND of text control
+	OutputDebug, % "OutVar1:" . OutVar1 . "`n"
+	; HwndKeybS_TF2
+} 
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+F_WM_ACTIVATE(wParam, lParam) 
 ; msg: The `msg` parameter is typically used to represent the message identifier. However, in the case of `OnMessage()`, AutoHotkey already knows which message we're handling because we specify it explicitly when registering the message handler. Therefore, there's no need to pass `msg` as a parameter to the user-defined function.
 ; hwnd: The `hwnd` parameter represents the handle of the window that received the message. In the case of `OnMessage()`, the `hwnd` is implicit and is not passed as a parameter to the user-defined function. Instead, the `hwnd` is available within the `WM_ACTIVATE` function as `lParam`. 
 ; - `wParam`: This parameter typically carries additional information about the message being sent. In the case of the `WM_ACTIVATE` message, `wParam` indicates the activation state of the window. Specifically:
