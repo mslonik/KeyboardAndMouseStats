@@ -50,7 +50,6 @@ F_OnText()	;when text control is clicked with mouse
 		,	index	:= 1
 		,	vHWNDvarN	:= "" 
 		,	vCounterV	:= 0
-		,	FlagFound	:= false
 
 	MouseGetPos, , , , vHWND, 2		;vHWND contains HWND of text control in hexadecimal format
 	vHWND := Format("{:u}", vHWND)	;conversion of vHWND from hexadecimal to decimal format (unsigned integer) 
@@ -58,17 +57,15 @@ F_OnText()	;when text control is clicked with mouse
 		if (index = vHWND) 
 		{
 			vHWNDvarN := aHWNDToVariable[vHWND] 
-			FlagFound	:= true
 			break
 		}
-	if (FlagFound)
-	{
-		vHWNDvarN := SubStr(vHWNDvarN, 8)	;remove the first 7 characters, prefix: "KeybS_T"
-		vHWNDvarN := "KC_" . vHWNDvarN	;add prefix "KC_" to get variable name in which value is stored
-		vCounterV := %vHWNDvarN%			;get value of counter
-		ToolTip, % vCounterV			;show information on screen
-		SetTimer, F_RemoveToolTip, -5000	;"-" = one time only, 5000 ms = 5 s
-	}	
+	vHWNDvarN := SubStr(vHWNDvarN, 8)	;remove the first 7 characters, prefix: "KeybS_T"
+	vHWNDvarN := "KC_" . vHWNDvarN	;add prefix "KC_" to get variable name in which value is stored
+	if (!IsSet(%vHWNDvarN%))			;if such dynamic variable doesn't exist (wasn't yet declared), what means there was no such a key presses yet 
+		return
+	vCounterV := %vHWNDvarN%			;get value of counter
+	ToolTip, % vCounterV			;show information on screen
+	SetTimer, F_RemoveToolTip, -5000	;"-" = one time only, 5000 ms = 5 s
 } 
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 F_RemoveToolTip()
