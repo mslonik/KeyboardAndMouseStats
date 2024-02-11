@@ -36,6 +36,7 @@ Critical, Off
 OnMessage(0x06, "F_WM_ACTIVATE")  	;register callback F_WM_ACTIVATE to Windows Message WM_ACTIVATE := 0x0006
 F_InitiateInputHook()
 v_InputH.Start()
+SetTimer, F_LogValues, % 1000 * 60 * 60	; 1 hour: 1000 ms = 1 s,  60 s = 1 min., 60 min. = 1 h
 return
 ; = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 ; end of initialization
@@ -91,11 +92,50 @@ F_WM_ACTIVATE(wParam, lParam) ; Check if the GUI window is being activated
 	{  ; wParam 1 = activated by mouse, 2 = activated by keyboard ;for some reasons the lparam is always returned as null. In official Microsoft documentation: "This handle can be NULL." without any further explanation.
 		if WinActive(("ahk_id" KeybSHwnd))		; Check if the GUI window is active
 		{
-          	F_ColorGuiKeys()  ; Call your function when the specified GUI window is selected
-			F_UpdateDateTimeCounter()
+          	F_ColorGuiKeys()  			;Call your function when the specified GUI window is selected
+			F_UpdateDateTimeCounter()	;Update some GUI values: date, time, overall counter value
+			F_LogValues()				;Values are logged after each check
 		}
     	}
 	return 0	;documentation says about it
+}
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+F_LogValues()
+{
+	global	;assume-global mode of operation
+	local	index 		:= 1		;index variable for "for" loop
+		,	WhichKeyName 	:= ""
+		,	VarNameTemp	:= ""
+		,	KCvalue		:= 0		;Key Counter value
+		,	Text			:= ""	;what to put in the log
+		,	Folder		:= ""
+		,	FileName		:= ""
+
+	Text 			:= A_Year . "-" . A_MM . "-" . A_DD . A_Space . A_Hour . ":" . A_Min . ":" . A_Sec . "`n"
+	Text				.= "Overall" . "," . vOverallCounter . "`n"
+	for index in aKeyboardCounters
+	{
+		WhichKeyName	:= aKeyboardCounters[index]
+	,	VarNameTemp 	:= "KC_" . aKeyboardCounters[index]	; KC = KeyCounter
+	,	KCvalue 		:= %VarNameTemp%					; KC values are stored under dynamically generated variable
+		Text			.= WhichKeyName . "," . A_Space . KCvalue . ";"
+	}
+	Text				.= "`n`n"
+
+	Folder			:= A_ScriptDir . "\" . "Log"
+,	FileName			:= Folder . "\" . A_Year . A_MM . A_DD . "_" . SubStr(A_ScriptName, 1, -4) . "DailyLog" . ".csv" 
+
+	if (!InStr(FileExist(Folder), "D"))
+	{
+		OutputDebug, % "No folder:" . ErrorLevel . "`n"
+		FileCreateDir, % Folder
+		OutputDebug, % "ErrorLevel:" . ErrorLevel . "`n"
+	}
+
+	FileAppend, % Text
+		, % FileName
+		, UTF-8										;encoding
+	OutputDebug, % "ErrorLevel:" . ErrorLevel . "`n"
 }
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 F_UpdateDateTimeCounter()
@@ -151,13 +191,11 @@ F_InitiateInputHook()
 {
 	global	;assume-global mode of operation
 
-	; OutputDebug, % A_ThisFunc . "`n" 
 	v_InputH 				:= InputHook("I5 V L0")			
 ; ,	v_InputH.OnKeyDown		:= Func("F_OnKeyDown")
 ,	v_InputH.OnKeyUp 		:= Func("F_InputHookOnKeyUp")
 ,	v_InputH.OnEnd			:= Func("F_InputHookOnEnd")
 ,	v_InputH.KeyOpt("{All}", "N")	;Necessary if only OnKeyUp is present in the code; "N" = Notify
-	; OutputDebug, % A_ThisFunc . A_Space . "ini_MinSendLevel:" . ini_MinSendLevel . "|" . A_Space . v_InputH.MinSendLevel . "`n"
 }
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 F_InputHookOnKeyUp(ih, VK, SC)
@@ -200,15 +238,7 @@ F_InputHookOnEnd(ih)	;for debugging purposes
 	global	;assume-global mode of operation
 	local 	KeyName 	:= ih.EndKey, Reason	:= ih.EndReason
 
-	OutputDebug, % A_ThisFunc . "`n" 
-	; if (ini_THLog)	
-	; 	FileAppend, % A_Hour . ":" . A_Min . ":" . A_Sec . "|" . ++v_LogCounter . "|" . "OnEnd" . "|" . KeyName 
-	; 		. "|" . "GetKeyName:" 	. "|" . GetKeyName(KeyName) 
-	; 		. "|" . "GetKeyVK:" 	. "|" . GetKeyVK(KeyName)
-	; 		. "|" . "GetKeySC:" 	. "|" . GetKeySC(KeyName)
-	; 		. "|" . "EndReason:"	. "|" . Reason
-	; 		. "|" . "`n", % v_LogFileName
-
+	; OutputDebug, % A_ThisFunc . "`n" 
 	if (Reason = "Max")
 		ih.Start()
 }
