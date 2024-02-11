@@ -24,15 +24,16 @@ FileEncoding, 			UTF-16		; Sets the default encoding for FileRead, FileReadLine,
 ; CoordMode, ToolTip,		Screen		; Only Screen makes sense for functions prepared in this script to handle position of on screen GUIs. 
 ; CoordMode, Mouse,		Screen		; Only Screen makes sense for functions prepared in this script to handle position of on screen GUIs.
 ; = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-#include %A_ScriptDir%\Lib\ctcolors.ahk
+#include %A_ScriptDir%\Lib\ctcolors.ahk	;https://gist.github.com/AHK-just-me/5882556
+
+	vOverallCounter 	:= 0		;overall number of recorded keyboard keys which were up after pressing
+,	aKeyboardCounters 	:= {}	;array variable to store KC (key counters) variable names (not values of counters, which are stored in variables "KC_" concatenated with variable name) 
+,	aHWNDToVariable 	:= {}	;array variable (associative) to store names of HWND variable names and HWND values (hexadecimal addresses)
 
 Critical, On
 F_GuiDefine_Keybs()
 Critical, Off
 OnMessage(0x06, "F_WM_ACTIVATE")  	;register callback F_WM_ACTIVATE to Windows Message WM_ACTIVATE := 0x0006
-	vOverallCounter 	:= 0		;overall number of recorded keyboard keys which were up after pressing
-,	aKeyboardCounters 	:= {}	;array variable to store KC (key counters) 
-,	aHWNDToVariable 	:= {}	;array variable (associative) to store names of HWND variable names and HWND values (hexadecimal addresses)
 F_InitiateInputHook()
 v_InputH.Start()
 return
@@ -44,11 +45,34 @@ return
 F_OnText()
 {
 	global	;assume-global mode of operation
-	local	OutVar1 := 0
+	local	vHWND 	:= 0
+		,	index	:= 1
+		,	vHWNDvarN	:= "" 
+		,	vCounterV	:= 0
+		,	FlagFound	:= false
 
-	MouseGetPos, , , , OutVar1, 2	;OutVar1 contains HWND of text control
-	OutputDebug, % "OutVar1:" . OutVar1 . "`n"
-	; HwndKeybS_TF2
+	MouseGetPos, , , , vHWND, 2		;vHWND contains HWND of text control in hexadecimal format
+	vHWND := Format("{:u}", vHWND)	;conversion of vHWND from hexadecimal to decimal format (unsigned integer) 
+	for index in aHWNDToVariable		;search array variable for value associated to vHWND
+		if (index = vHWND) 
+		{
+			vHWNDvarN := aHWNDToVariable[vHWND] 
+			FlagFound	:= true
+			break
+		}
+	if (FlagFound)
+	{
+		vHWNDvarN := SubStr(vHWNDvarN, 8)	;remove the first 7 characters, prefix: "KeybS_T"
+		vHWNDvarN := "KC_" . vHWNDvarN	;add prefix "KC_" to get variable name in which value is stored
+		vCounterV := %vHWNDvarN%			;get value of counter
+		ToolTip, % vCounterV			;show information on screen
+		SetTimer, F_RemoveToolTip, -5000	;"-" = one time only, 5000 ms = 5 s
+	}	
+} 
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+F_RemoveToolTip()
+{
+	Tooltip							;with no arguments just hides the tooltips
 } 
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 F_WM_ACTIVATE(wParam, lParam) 

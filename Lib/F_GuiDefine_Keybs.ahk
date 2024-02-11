@@ -6,6 +6,7 @@ F_GuiDefine_Keybs()
 		,	vControlPosY 	:= 0
 		,	vControlPosW 	:= 0
 		,	vControlPosH 	:= 0
+		,	HWNDaddress	:= 0
 
 	Gui, KeybS: New
 		, -Resize +HwndKeybSHwnd +Owner -MaximizeBox -MinimizeBox
@@ -23,10 +24,13 @@ F_GuiDefine_Keybs()
 	; upper row (13 keys) 
 	Gui, KeybS: Add
 		,	Text
-		,	% "HwndKeybS_TEscape" . A_Space 
+		,	% "Hwnd" . "KeybS_TEscape" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  ⎋  "	;escape key
+
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TEscape
+	aHWNDToVariable[HWNDaddress] := "KeybS_TEscape"
 
 	Gui, KeybS: Add
 		,	Text
@@ -564,7 +568,7 @@ F_GuiDefine_Keybs()
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TLWindows" . A_Space 
+		. 	"HwndKeybS_TLWin" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "   ⊞  "
@@ -596,7 +600,7 @@ F_GuiDefine_Keybs()
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
-		. 	"HwndKeybS_TRWindows" . A_Space 
+		. 	"HwndKeybS_TRWin" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "   ⊞  "
@@ -755,6 +759,7 @@ global	;assume-global mode of operation
 
 	CTLCOLORS.Free()
 	v_InputH.Stop()
+	ToolTip,			;destroy the last tooltip
 	ExitApp, 0
 }
 
