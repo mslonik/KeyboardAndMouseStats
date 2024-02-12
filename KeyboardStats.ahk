@@ -37,12 +37,39 @@ OnMessage(0x06, "F_WM_ACTIVATE")  	;register callback F_WM_ACTIVATE to Windows M
 F_InitiateInputHook()
 v_InputH.Start()
 SetTimer, F_LogValues, % 1000 * 60 * 60	; 1 hour: 1000 ms = 1 s,  60 s = 1 min., 60 min. = 1 h
+OnExit("F_ExitFunc")
 return
 ; = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 ; end of initialization
 ; = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - FUNCTIONS BLOCK
+F_ExitFunc(ExitReason, ExitCode)	;a function to be called automatically whenever the script exits. 
+{
+	global	;assume-global mode of operation
+	local	Folder			:= A_ScriptDir . "\" . "Log"	
+		,	FileName			:= Folder . "\" . A_Year . A_MM . A_DD . "_" . SubStr(A_ScriptName, 1, -4) . "DailyLog" . ".csv" 
+		,	CurrTime			:= A_Year . "-" . A_MM . "-" . A_DD . A_Space . A_Hour . ":" . A_Min . ":" . A_Sec 
+		,	Text				:=  ""
+
+	Switch ExitReason 
+	{
+		Case "Logoff", "Shutdown":
+			Text		:= CurrTime . A_Space . "Logoff or Shutdown…" . "`n"
+		Case "Exit":
+			Text		:= CurrTime . A_Space . "User closed window…" . "`n"
+		Default:
+			MsgBox, % 4 + 16, % SubStr(A_ScriptName, 1, -4), Are you sure you want to exit?	;4 = Yes/No, 16 = Stop Hand
+			IfMsgBox, Yes
+				Text	:= CurrTime . A_Space . "UserExits or reloads…" . "`n"
+	}
+	FileAppend, % Text
+		, % FileName
+		, UTF-8				;encoding
+	F_LogValues()				;Values are logged after each check
+	; Do not call ExitApp -- that would prevent other callbacks from being called.
+}
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 F_OnText()	;when text control is clicked with mouse
 {
 	global	;assume-global mode of operation
@@ -124,9 +151,9 @@ F_LogValues()
 
 	if (!InStr(FileExist(Folder), "D"))
 	{
-		OutputDebug, % "No folder:" . ErrorLevel . "`n"
+		; OutputDebug, % "No folder:" . ErrorLevel . "`n"
 		FileCreateDir, % Folder
-		OutputDebug, % "ErrorLevel:" . ErrorLevel . "`n"
+		; OutputDebug, % "ErrorLevel:" . ErrorLevel . "`n"
 	}
 
 	FileAppend, % Text

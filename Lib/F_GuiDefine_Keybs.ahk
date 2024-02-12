@@ -1,4 +1,4 @@
-F_GuiDefine_Keybs()
+﻿F_GuiDefine_Keybs()
 {
 	global	;assume-global mode of operation
 	local	vControlPos 	:= 0
@@ -608,22 +608,22 @@ F_GuiDefine_Keybs()
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x+5" . A_Space 
+		. 	"Hwnd" . "KeybS_TV" . A_Space 
+		. 	"Border" . A_Space 
+		.	"g" . "F_OnText"
+		,	% "  V  "
+	GuiControlGet, HWNDaddress, HWND, % KeybS_TV
+	aHWNDToVariable[HWNDaddress] := "KeybS_TV"
+
+	Gui, KeybS: Add
+		, 	Text
+		,	% "x+5" . A_Space 
 		. 	"Hwnd" . "KeybS_TB" . A_Space 
 		. 	"Border" . A_Space 
 		.	"g" . "F_OnText"
 		,	% "  B  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TB
 	aHWNDToVariable[HWNDaddress] := "KeybS_TB"
-
-	Gui, KeybS: Add
-		, 	Text
-		,	% "x+5" . A_Space 
-		. 	"Hwnd" . "KeybS_TV" . A_Space 
-		. 	"Border" . A_Space 
-		.	"g" . "F_OnText"
-		,	% "  B  "
-	GuiControlGet, HWNDaddress, HWND, % KeybS_TV
-	aHWNDToVariable[HWNDaddress] := "KeybS_TV"
 
 	Gui, KeybS: Add
 		, 	Text
@@ -946,7 +946,10 @@ F_GuiDefine_Keybs()
 		. 	"Hwnd" . "OvCount"  . A_Space 
 		; . 	"Border" . A_Space 
 		; .	"g" . "F_OnText"
-		,	% "99 999" 
+		,	% "99 999"	;placeholder, occupies space
+	GuiControl, 
+		, % OvCount
+		, 0
 
 	F_ColorScale()
 
@@ -959,12 +962,21 @@ F_GuiDefine_Keybs()
 
 KeybSGuiClose(GuiHwnd)
 {
-global	;assume-global mode of operation
+	global	;assume-global mode of operation
+	local	Folder			:= A_ScriptDir . "\" . "Log"	
+		,	FileName			:= Folder . "\" . A_Year . A_MM . A_DD . "_" . SubStr(A_ScriptName, 1, -4) . "DailyLog" . ".csv" 
+		,	CurrTime			:= A_Year . "-" . A_MM . "-" . A_DD . A_Space . A_Hour . ":" . A_Min . ":" . A_Sec 
+		,	Text				:=  ""
 
-	CTLCOLORS.Free()
-	v_InputH.Stop()
-	ToolTip,			;destroy the last tooltip
-	ExitApp, 0
+	MsgBox, % 4 + 16
+		, % SubStr(A_ScriptName, 1, -4)
+		, Are you sure you want to exit?	;4 = Yes/No, 16 = Stop Hand
+	IfMsgBox, Yes
+		ExitApp, 0
+	Gui, KeybS: Show
+		, Center AutoSize
+		, % SubStr(A_ScriptName, 1, -4) 
+	return true
 }
 
 ; = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
