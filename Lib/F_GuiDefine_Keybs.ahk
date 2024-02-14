@@ -9,7 +9,7 @@
 		,	HWNDaddress	:= 0
 
 	Gui, KeybS: New
-		, -Resize +HwndKeybSHwnd +Owner -MaximizeBox -MinimizeBox
+		, -Resize +HwndKeybSHwnd -MaximizeBox	;+Owner: An owned window has no taskbar button by default, no separate icon on taskbar when script is launched.
 	Gui,	KeybS: Font
 		,	s10
 		, 	Courier New	;this is monospace font, what is important to show correctly on the GUI. Number of spaces matters.
@@ -29,7 +29,8 @@
 		.	"g" . "F_OnText"
 		,	% "  ⎋  "	;escape key
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TEscape
-	aHWNDToVariable[HWNDaddress] := "KeybS_TEscape"
+	aHWNDToVariable[HWNDaddress] 	:= "KeybS_TEscape"
+,	aKeyLabel[HWNDaddress] 		:= "  ⎋  "
 
 	Gui, KeybS: Add
 		,	Text
@@ -40,6 +41,7 @@
 		,	% " F1  "	
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TF1
 	aHWNDToVariable[HWNDaddress] := "KeybS_TF1"
+,	aKeyLabel[HWNDaddress] 		:= " F1  "
 
 	Gui, KeybS: Add
 		,	Text
@@ -50,6 +52,7 @@
 		,	% " F2  "	
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TF2
 	aHWNDToVariable[HWNDaddress] := "KeybS_TF2"
+,	aKeyLabel[HWNDaddress] 		:= " F2  "
 
 	Gui, KeybS: Add
 		,	Text
@@ -60,6 +63,7 @@
 		,	% " F3  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TF3
 	aHWNDToVariable[HWNDaddress] := "KeybS_TF3"
+,	aKeyLabel[HWNDaddress] 		:= " F3  "
 
 	Gui, KeybS: Add
 		,	Text
@@ -70,6 +74,7 @@
 		,	% " F4  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TF4
 	aHWNDToVariable[HWNDaddress] := "KeybS_TF4"
+,	aKeyLabel[HWNDaddress] 		:= " F4  "
 
 	Gui, KeybS: Add
 		,	Text
@@ -80,6 +85,7 @@
 		,	% " F5  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TF5
 	aHWNDToVariable[HWNDaddress] := "KeybS_TF5"
+,	aKeyLabel[HWNDaddress] 		:= " F5  "
 
 	Gui, KeybS: Add
 		,	Text
@@ -90,6 +96,7 @@
 		,	% " F6  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TF6
 	aHWNDToVariable[HWNDaddress] := "KeybS_TF6"
+,	aKeyLabel[HWNDaddress] 		:= " F6  "
 
 	Gui, KeybS: Add
 		,	Text
@@ -100,6 +107,7 @@
 		,	% " F7  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TF7
 	aHWNDToVariable[HWNDaddress] := "KeybS_TF7"
+,	aKeyLabel[HWNDaddress] 		:= " F7  "
 
 	Gui, KeybS: Add
 		,	Text
@@ -110,6 +118,7 @@
 		,	% " F8  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TF8
 	aHWNDToVariable[HWNDaddress] := "KeybS_TF8"
+,	aKeyLabel[HWNDaddress] 		:= " F8  "
 
 	Gui, KeybS: Add
 		,	Text
@@ -120,6 +129,7 @@
 		,	% " F9  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TF9
 	aHWNDToVariable[HWNDaddress] := "KeybS_TF9"
+,	aKeyLabel[HWNDaddress] 		:= " F9  "
 
 	Gui, KeybS: Add
 		,	Text
@@ -130,6 +140,7 @@
 		,	% " F10 "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TF10
 	aHWNDToVariable[HWNDaddress] := "KeybS_TF10"
+,	aKeyLabel[HWNDaddress] 		:= " F10 "
 
 	Gui, KeybS: Add
 		,	Text
@@ -140,6 +151,7 @@
 		,	% " F11 "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TF11
 	aHWNDToVariable[HWNDaddress] := "KeybS_TF11"
+,	aKeyLabel[HWNDaddress] 		:= " F11 "
 
 	Gui, KeybS: Add
 		,	Text
@@ -150,6 +162,7 @@
 		,	% " F12 "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TF12
 	aHWNDToVariable[HWNDaddress] := "KeybS_TF12"
+,	aKeyLabel[HWNDaddress] 		:= " F12 "
 
 	; raw 1 (14 keys) 
 	Gui, KeybS: Add
@@ -161,6 +174,7 @@
 		,	% "  ``  "	;backtick must be escaped
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TBacktick
 	aHWNDToVariable[HWNDaddress] := "KeybS_TBacktick"
+,	aKeyLabel[HWNDaddress] 		:= "  ``  "
 
 	Gui, KeybS: Add
 		,	Text
@@ -171,6 +185,7 @@
 		,	% "  1  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_T1
 	aHWNDToVariable[HWNDaddress] := "KeybS_T1"
+,	aKeyLabel[HWNDaddress] 		:= "  1  "
 
 	Gui, KeybS: Add
 		,	Text
@@ -181,6 +196,7 @@
 		,	% "  2  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_T2
 	aHWNDToVariable[HWNDaddress] := "KeybS_T2"
+,	aKeyLabel[HWNDaddress] 		:= "  2  "
 
 	Gui, KeybS: Add
 		,	Text
@@ -191,6 +207,7 @@
 		,	% "  3  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_T3
 	aHWNDToVariable[HWNDaddress] := "KeybS_T3"
+,	aKeyLabel[HWNDaddress] 		:= "  3  "
 
 	Gui, KeybS: Add
 		,	Text
@@ -201,6 +218,7 @@
 		,	% "  4  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_T4
 	aHWNDToVariable[HWNDaddress] := "KeybS_T4"
+,	aKeyLabel[HWNDaddress] 		:= "  4  "
 
 	Gui, KeybS: Add
 		,	Text
@@ -211,6 +229,7 @@
 		,	% "  5  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_T5
 	aHWNDToVariable[HWNDaddress] := "KeybS_T5"
+,	aKeyLabel[HWNDaddress] 		:= "  5  "
 
 	Gui, KeybS: Add
 		,	Text
@@ -221,6 +240,7 @@
 		,	% "  6  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_T6
 	aHWNDToVariable[HWNDaddress] := "KeybS_T6"
+,	aKeyLabel[HWNDaddress] 		:= "  6  "
 
 	Gui, KeybS: Add
 		,	Text
@@ -231,6 +251,7 @@
 		,	% "  7  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_T7
 	aHWNDToVariable[HWNDaddress] := "KeybS_T7"
+,	aKeyLabel[HWNDaddress] 		:= "  7  "
 
 	Gui, KeybS: Add
 		,	Text
@@ -241,6 +262,7 @@
 		,	% "  8  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_T8
 	aHWNDToVariable[HWNDaddress] := "KeybS_T8"
+,	aKeyLabel[HWNDaddress] 		:= "  8  "
 
 	Gui, KeybS: Add
 		,	Text
@@ -251,6 +273,7 @@
 		,	% "  9  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_T9
 	aHWNDToVariable[HWNDaddress] := "KeybS_T9"
+,	aKeyLabel[HWNDaddress] 		:= "  9  "
 
 	Gui, KeybS: Add
 		,	Text
@@ -261,6 +284,7 @@
 		,	% "  0  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_T0
 	aHWNDToVariable[HWNDaddress] := "KeybS_T0"
+,	aKeyLabel[HWNDaddress] 		:= "  0  "
 
 	Gui, KeybS: Add
 		,	Text
@@ -271,6 +295,7 @@
 		,	% "  -  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TMinus
 	aHWNDToVariable[HWNDaddress] := "KeybS_TMinus"
+,	aKeyLabel[HWNDaddress] 		:= "  -  "
 
 	Gui, KeybS: Add
 		,	Text
@@ -281,6 +306,7 @@
 		,	% "  =  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TEquals
 	aHWNDToVariable[HWNDaddress] := "KeybS_TEquals"
+,	aKeyLabel[HWNDaddress] 		:= "  =  "
 
 	Gui, KeybS: Add
 		,	Text
@@ -291,6 +317,7 @@
 		,	% "  ←   "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TBackspace
 	aHWNDToVariable[HWNDaddress] := "KeybS_TBackspace"
+,	aKeyLabel[HWNDaddress] 		:= "  ←   "
 
 	; raw 2 (14 keys) 
 	Gui, KeybS: Add
@@ -302,6 +329,7 @@
 		,	% "   ⭾  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TTab
 	aHWNDToVariable[HWNDaddress] := "KeybS_TTab"
+,	aKeyLabel[HWNDaddress] 		:= "   ⭾  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -312,6 +340,7 @@
 		,	% "  Q  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TQ
 	aHWNDToVariable[HWNDaddress] := "KeybS_TQ"
+,	aKeyLabel[HWNDaddress] 		:= "  Q  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -322,6 +351,7 @@
 		,	% "  W  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TW
 	aHWNDToVariable[HWNDaddress] := "KeybS_TW"
+,	aKeyLabel[HWNDaddress] 		:= "  W  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -332,6 +362,7 @@
 		,	% "  E  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TE
 	aHWNDToVariable[HWNDaddress] := "KeybS_TE"
+,	aKeyLabel[HWNDaddress] 		:= "  E  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -342,6 +373,7 @@
 		,	% "  R  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TR
 	aHWNDToVariable[HWNDaddress] := "KeybS_TR"
+,	aKeyLabel[HWNDaddress] 		:= "  R  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -352,6 +384,7 @@
 		,	% "  T  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TT
 	aHWNDToVariable[HWNDaddress] := "KeybS_TT"
+,	aKeyLabel[HWNDaddress] 		:= "  T  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -362,6 +395,7 @@
 		,	% "  Y  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TY
 	aHWNDToVariable[HWNDaddress] := "KeybS_TY"
+,	aKeyLabel[HWNDaddress] 		:= "  Y  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -372,6 +406,7 @@
 		,	% "  U  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TU
 	aHWNDToVariable[HWNDaddress] := "KeybS_TU"
+,	aKeyLabel[HWNDaddress] 		:= "  U  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -382,6 +417,7 @@
 		,	% "  I  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TI
 	aHWNDToVariable[HWNDaddress] := "KeybS_TI"
+,	aKeyLabel[HWNDaddress] 		:= "  I  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -392,6 +428,7 @@
 		,	% "  O  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TO
 	aHWNDToVariable[HWNDaddress] := "KeybS_TO"
+,	aKeyLabel[HWNDaddress] 		:= "  O  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -402,6 +439,7 @@
 		,	% "  P  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TP
 	aHWNDToVariable[HWNDaddress] := "KeybS_TP"
+,	aKeyLabel[HWNDaddress] 		:= "  P  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -412,6 +450,7 @@
 		,	% "  [  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TSquareBracket1
 	aHWNDToVariable[HWNDaddress] := "KeybS_TSquareBracket1"
+,	aKeyLabel[HWNDaddress] 		:= "  [  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -422,6 +461,7 @@
 		,	% "  ]  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TSquareBracket2
 	aHWNDToVariable[HWNDaddress] := "KeybS_TSquareBracket2"
+,	aKeyLabel[HWNDaddress] 		:= "  ]  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -432,6 +472,7 @@
 		,	% "   \  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TBackslash
 	aHWNDToVariable[HWNDaddress] := "KeybS_TBackslash"
+,	aKeyLabel[HWNDaddress] 		:= "  \  "
 
 	;raw 3 (13 keys)
 	Gui, KeybS: Add
@@ -443,6 +484,7 @@
 		,	% "   ⇪   "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TCapslock
 	aHWNDToVariable[HWNDaddress] := "KeybS_TCapslock"
+,	aKeyLabel[HWNDaddress] 		:= "   ⇪   "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -453,6 +495,7 @@
 		,	% "  A  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TA
 	aHWNDToVariable[HWNDaddress] := "KeybS_TA"
+,	aKeyLabel[HWNDaddress] 		:= "  A  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -463,6 +506,7 @@
 		,	% "  S  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TS
 	aHWNDToVariable[HWNDaddress] := "KeybS_TS"
+,	aKeyLabel[HWNDaddress] 		:= "  S  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -473,6 +517,7 @@
 		,	% "  D  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TD
 	aHWNDToVariable[HWNDaddress] := "KeybS_TD"
+,	aKeyLabel[HWNDaddress] 		:= "  D  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -483,6 +528,7 @@
 		,	% "  F  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TF
 	aHWNDToVariable[HWNDaddress] := "KeybS_TF"
+,	aKeyLabel[HWNDaddress] 		:= "  F  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -493,6 +539,7 @@
 		,	% "  G  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TG
 	aHWNDToVariable[HWNDaddress] := "KeybS_TG"
+,	aKeyLabel[HWNDaddress] 		:= "  G  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -503,6 +550,7 @@
 		,	% "  H  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TH
 	aHWNDToVariable[HWNDaddress] := "KeybS_TH"
+,	aKeyLabel[HWNDaddress] 		:= "  H  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -513,6 +561,7 @@
 		,	% "  J  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TJ
 	aHWNDToVariable[HWNDaddress] := "KeybS_TJ"
+,	aKeyLabel[HWNDaddress] 		:= "  J  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -523,6 +572,7 @@
 		,	% "  K  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TK
 	aHWNDToVariable[HWNDaddress] := "KeybS_TK"
+,	aKeyLabel[HWNDaddress] 		:= "  K  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -533,6 +583,7 @@
 		,	% "  L  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TL
 	aHWNDToVariable[HWNDaddress] := "KeybS_TL"
+,	aKeyLabel[HWNDaddress] 		:= "  L  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -543,6 +594,7 @@
 		,	% "  `;  "	;semicolon must be escaped in such circumstances
 	GuiControlGet, HWNDaddress, HWND, % KeybS_Tsemicolon
 	aHWNDToVariable[HWNDaddress] := "KeybS_Tsemicolon"
+,	aKeyLabel[HWNDaddress] 		:= "  `;  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -553,6 +605,7 @@
 		,	% "  '  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TApostrophe
 	aHWNDToVariable[HWNDaddress] := "KeybS_TApostrophe"
+,	aKeyLabel[HWNDaddress] 		:= "  '  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -563,6 +616,7 @@
 		,	% "     ↵     "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TEnter
 	aHWNDToVariable[HWNDaddress] := "KeybS_TEnter"
+,	aKeyLabel[HWNDaddress] 		:= "     ↵     "
 
 	;raw 4 (12 keys)
 	Gui, KeybS: Add
@@ -574,6 +628,7 @@
 		,	% "     ⇧    "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TLShift
 	aHWNDToVariable[HWNDaddress] := "KeybS_TLShift"
+,	aKeyLabel[HWNDaddress] 		:= "     ⇧    "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -583,7 +638,8 @@
 		.	"g" . "F_OnText"
 		,	% "  Z  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TZ
-	aHWNDToVariable[HWNDaddress] := "KeybS_TZ"
+	aHWNDToVariable[HWNDaddress] 	:= "KeybS_TZ"
+,	aKeyLabel[HWNDaddress] 		:= "  Z  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -594,6 +650,7 @@
 		,	% "  X  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TX
 	aHWNDToVariable[HWNDaddress] := "KeybS_TX"
+,	aKeyLabel[HWNDaddress] 		:= "  X  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -604,6 +661,7 @@
 		,	% "  C  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TC
 	aHWNDToVariable[HWNDaddress] := "KeybS_TC"
+,	aKeyLabel[HWNDaddress] 		:= "  C  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -614,6 +672,7 @@
 		,	% "  V  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TV
 	aHWNDToVariable[HWNDaddress] := "KeybS_TV"
+,	aKeyLabel[HWNDaddress] 		:= "  V  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -624,6 +683,7 @@
 		,	% "  B  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TB
 	aHWNDToVariable[HWNDaddress] := "KeybS_TB"
+,	aKeyLabel[HWNDaddress] 		:= "  B  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -634,6 +694,7 @@
 		,	% "  N  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TN
 	aHWNDToVariable[HWNDaddress] := "KeybS_TN"
+,	aKeyLabel[HWNDaddress] 		:= "  N  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -644,6 +705,7 @@
 		,	% "  M  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TM
 	aHWNDToVariable[HWNDaddress] := "KeybS_TM"
+,	aKeyLabel[HWNDaddress] 		:= "  M  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -654,6 +716,7 @@
 		,	% "  ,  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TComma
 	aHWNDToVariable[HWNDaddress] := "KeybS_TComma"
+,	aKeyLabel[HWNDaddress] 		:= "  ,  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -664,6 +727,7 @@
 		,	% "  .  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TDot
 	aHWNDToVariable[HWNDaddress] := "KeybS_TDot"
+,	aKeyLabel[HWNDaddress] 		:= "  .  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -674,6 +738,7 @@
 		,	% "  /  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TSlash
 	aHWNDToVariable[HWNDaddress] := "KeybS_TSlash"
+,	aKeyLabel[HWNDaddress] 		:= "  /  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -683,7 +748,8 @@
 		.	"g" . "F_OnText"
 		,	% "      ⇧       "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TRShift
-	aHWNDToVariable[HWNDaddress] := "KeybS_TRShift"
+	aHWNDToVariable[HWNDaddress] 	:= "KeybS_TRShift"
+,	aKeyLabel[HWNDaddress] 		:= "      ⇧       "
 
 	;raw 5 (8 keys)
 	Gui, KeybS: Add
@@ -694,7 +760,8 @@
 		.	"g" . "F_OnText"
 		,	% "   ⎈  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TLControl
-	aHWNDToVariable[HWNDaddress] := "KeybS_TLControl"
+	aHWNDToVariable[HWNDaddress] 	:= "KeybS_TLControl"
+,	aKeyLabel[HWNDaddress] 		:= "   ⎈  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -704,7 +771,8 @@
 		.	"g" . "F_OnText"
 		,	% "   ⊞  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TLWin
-	aHWNDToVariable[HWNDaddress] := "KeybS_TLWin"
+	aHWNDToVariable[HWNDaddress] 	:= "KeybS_TLWin"
+,	aKeyLabel[HWNDaddress] 		:= "   ⊞  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -714,7 +782,8 @@
 		.	"g" . "F_OnText"
 		,	% "   ⎇  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TLAlt
-	aHWNDToVariable[HWNDaddress] := "KeybS_TLAlt"
+	aHWNDToVariable[HWNDaddress] 	:= "KeybS_TLAlt"
+,	aKeyLabel[HWNDaddress] 		:= "   ⎇  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -724,7 +793,8 @@
 		.	"g" . "F_OnText"
 		,	% "                ␣                 "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TSpace
-	aHWNDToVariable[HWNDaddress] := "KeybS_TSpace"
+	aHWNDToVariable[HWNDaddress] 	:= "KeybS_TSpace"
+,	aKeyLabel[HWNDaddress] 		:= "                ␣                 "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -734,7 +804,8 @@
 		.	"g" . "F_OnText"
 		,	% "   ⎇  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TRAlt
-	aHWNDToVariable[HWNDaddress] := "KeybS_TRAlt"
+	aHWNDToVariable[HWNDaddress] 	:= "KeybS_TRAlt"
+,	aKeyLabel[HWNDaddress] 		:= "   ⎇  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -744,7 +815,8 @@
 		.	"g" . "F_OnText"
 		,	% "   ⊞  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TRWin
-	aHWNDToVariable[HWNDaddress] := "KeybS_TRWin"
+	aHWNDToVariable[HWNDaddress] 	:= "KeybS_TRWin"
+,	aKeyLabel[HWNDaddress] 		:= "   ⊞  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -755,6 +827,7 @@
 		,	% "  Fn  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TFn
 	aHWNDToVariable[HWNDaddress] := "KeybS_TFn"
+,	aKeyLabel[HWNDaddress] 		:= "  Fn  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -764,7 +837,8 @@
 		.	"g" . "F_OnText"
 		,	% "   ⎈  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TRControl
-	aHWNDToVariable[HWNDaddress] := "KeybS_TRControl"
+	aHWNDToVariable[HWNDaddress] 	:= "KeybS_TRControl"
+,	aKeyLabel[HWNDaddress] 		:= "   ⎈  "
 
 	;middle island, first row (3 keys) 
 	GuiControlGet,	vControlPos, Pos
@@ -778,7 +852,8 @@
 		.	"g" . "F_OnText"
 		,	% " PS  "		;PrtScr (Print Screen)
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TPrintScreen
-	aHWNDToVariable[HWNDaddress] := "KeybS_TPrintScreen"
+	aHWNDToVariable[HWNDaddress] 	:= "KeybS_TPrintScreen"
+,	aKeyLabel[HWNDaddress] 		:= " PS  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -788,7 +863,8 @@
 		.	"g" . "F_OnText"
 		,	% "  Pe  "		;Pause
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TPause
-	aHWNDToVariable[HWNDaddress] := "KeybS_TPause"
+	aHWNDToVariable[HWNDaddress] 	:= "KeybS_TPause"
+,	aKeyLabel[HWNDaddress] 		:= "  Pe  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -798,7 +874,8 @@
 		.	"g" . "F_OnText"
 		,	% "  Me  "		;Mode
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TMode
-	aHWNDToVariable[HWNDaddress] := "KeybS_TMode"
+	aHWNDToVariable[HWNDaddress] 	:= "KeybS_TMode"
+,	aKeyLabel[HWNDaddress] 		:= "  Me  "
 
 	;middle island, second raw (3 keys) 
 	GuiControlGet, vControlPos, Pos
@@ -813,6 +890,7 @@
 		,	% " Ins "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TInsert
 	aHWNDToVariable[HWNDaddress] := "KeybS_TInsert"
+,	aKeyLabel[HWNDaddress] 		:= " Ins "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -823,6 +901,7 @@
 		,	% "  ⇱   "		;Home
 	GuiControlGet, HWNDaddress, HWND, % KeybS_THome
 	aHWNDToVariable[HWNDaddress] := "KeybS_THome"
+,	aKeyLabel[HWNDaddress] 		:= "  ⇱   "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -833,6 +912,7 @@
 		,	% "  PU  "		;Page Up
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TPgUp
 	aHWNDToVariable[HWNDaddress] := "KeybS_TPgUp"
+,	aKeyLabel[HWNDaddress] 		:= "  PU  "
 
 	;middle island, third raw (3 keys) 
 	GuiControlGet, vControlPos, Pos
@@ -847,6 +927,7 @@
 		,	% " Del "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TDelete
 	aHWNDToVariable[HWNDaddress] := "KeybS_TDelete"
+,	aKeyLabel[HWNDaddress] 		:= " Del "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -857,6 +938,7 @@
 		,	% "  ⇲   "		;Home
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TEnd
 	aHWNDToVariable[HWNDaddress] := "KeybS_TEnd"
+,	aKeyLabel[HWNDaddress] 		:= "  ⇲   "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -867,6 +949,7 @@
 		,	% "  PD  "		;Home
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TPgDn
 	aHWNDToVariable[HWNDaddress] := "KeybS_TPgDn"
+,	aKeyLabel[HWNDaddress] 		:= "  PD  "
 
 	;cursors (4 keys) 
 	GuiControlGet, vControlPos, Pos
@@ -881,6 +964,7 @@
 		,	% "  ↑  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TUp
 	aHWNDToVariable[HWNDaddress] := "KeybS_TUp"
+,	aKeyLabel[HWNDaddress] 		:= "  ↑  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -891,6 +975,7 @@
 		,	% "  ↓  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TDown
 	aHWNDToVariable[HWNDaddress] := "KeybS_TDown"
+,	aKeyLabel[HWNDaddress] 		:= "  ↓  "
 
 	Gui, KeybS: Add
 		, 	Text
@@ -901,6 +986,7 @@
 		,	% "  →  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TRight
 	aHWNDToVariable[HWNDaddress] := "KeybS_TRight"
+,	aKeyLabel[HWNDaddress] 		:= "  →  "
 
 	GuiControlGet, vControlPos, Pos
 		, 	% KeybS_TRight
@@ -914,6 +1000,7 @@
 		,	% "  ←  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_TLeft
 	aHWNDToVariable[HWNDaddress] := "KeybS_TLeft"
+,	aKeyLabel[HWNDaddress] 		:= "  ←  "
 
 	;date
 	GuiControlGet, vControlPos, Pos
@@ -954,13 +1041,13 @@
 	F_ColorScale()
 
 	Gui, KeybS: Show
-		, Center AutoSize
+		, Hide Center AutoSize
 		, % SubStr(A_ScriptName, 1, -4) 
+
+	; OutputDebug, % A_ThisFunc . A_Space . "E" . "`n"
 } 
-
-; = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-
-KeybSGuiClose(GuiHwnd)
+;- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+KeybSGuiClose(GuiHwnd)	;GuiEvent
 {
 	global	;assume-global mode of operation
 	local	Folder			:= A_ScriptDir . "\" . "Log"	
@@ -968,6 +1055,7 @@ KeybSGuiClose(GuiHwnd)
 		,	CurrTime			:= A_Year . "-" . A_MM . "-" . A_DD . A_Space . A_Hour . ":" . A_Min . ":" . A_Sec 
 		,	Text				:=  ""
 
+	; OutputDebug, % A_ThisFunc . "`n"
 	MsgBox, % 4 + 16
 		, % SubStr(A_ScriptName, 1, -4)
 		, Are you sure you want to exit?	;4 = Yes/No, 16 = Stop Hand
@@ -978,9 +1066,12 @@ KeybSGuiClose(GuiHwnd)
 		, % SubStr(A_ScriptName, 1, -4) 
 	return true
 }
-
-; = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-
+;- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+KeybSGuiEscape()	;GuiEvent
+{
+	Gui, KeybS: Hide
+}
+;- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 F_ColorScale()	;color scale, 1…100 in form of text spaces with colored background.
 {
 	global	;assume-global mode of operation

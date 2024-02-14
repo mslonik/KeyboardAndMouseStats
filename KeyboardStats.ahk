@@ -11,28 +11,32 @@
 #SingleInstance, 		force		; Only one instance of this script may run at a time!
 #NoEnv  							; Recommended for performance and compatibility with future AutoHotkey releases.
 #Warn  							; Enable warnings to assist with detecting common errors.
-; #LTrim							; Omits spaces and tabs at the beginning of each line. This is primarily used to allow the continuation section to be indented. Also, this option may be turned on for multiple continuation sections by specifying #LTrim on a line by itself. #LTrim is positional: it affects all continuation sections physically beneath it.
-; #KeyHistory, 			10			; KeyHistory is necessary for A_PriorKey
-; #HotkeyInterval, 		1000			; Specifies the rate of hotkey activations beyond which a warning dialog will be displayed. Default value = 2000 ms.
-; #MaxHotkeysPerInterval, 	200			; Specifies the rate of hotkey activations beyond which a warning dialog will be displayed. Default value = 70.
-; #MenuMaskKey, 			vkE8  		; vkE8 is something unassigned; this is important for F_Undo if triggerstring contained "l" and #z (Win + z) is applied as undo character
-; ListLines, 			Off			; ListLines is disabled to make it harder to determine how script works.
-; SendMode, 			Input		; Recommended for new scripts due to its superior speed and reliability.
+ListLines, 			Off			; ListLines is disabled to make it harder to determine how script works.
 SetWorkingDir, 		% A_ScriptDir	; Ensures a consistent starting directory.
 FileEncoding, 			UTF-16		; Sets the default encoding for FileRead, FileReadLine, Loop Read, FileAppend, and FileOpen(). Unicode UTF-16, little endian byte order (BMP of ISO 10646). Useful for .ini files which by default are coded as UTF-16. https://docs.microsoft.com/pl-pl/windows/win32/intl/code-page-identifiers?redirectedfrom=MSDN Warning! UTF-16 is not recognized by Notepad++ editor (2021), which recognizes correctly UCS-2 (defined by the International Standard ISO/IEC 10646). BMP = Basic Multilingual Plane.
-; CoordMode, Caret,		Screen		; Only Screen makes sense for functiofirmadd/ns prepared in this script to handle position of on screen GUIs. 
-; CoordMode, ToolTip,		Screen		; Only Screen makes sense for functions prepared in this script to handle position of on screen GUIs. 
-; CoordMode, Mouse,		Screen		; Only Screen makes sense for functions prepared in this script to handle position of on screen GUIs.
 ; = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 #include %A_ScriptDir%\Lib\ctcolors.ahk	;https://gist.github.com/AHK-just-me/5882556
 
 	vOverallCounter 	:= 0		;overall number of recorded keyboard keys which were up after pressing
 ,	aKeyboardCounters 	:= {}	;array variable to store KC (key counters) variable names (not values of counters, which are stored in variables "KC_" concatenated with variable name) 
 ,	aHWNDToVariable 	:= {}	;array variable (associative) to store names of HWND variable names and HWND values (hexadecimal addresses)
+,	aKeyLabel			:= {}	;array variable to store initial keyboard key labels
 
 Critical, On
 F_GuiDefine_Keybs()
 Critical, Off
+
+Menu, Tray, NoMainWindow
+Menu, Tray, Tip, % SubStr(A_ScriptName, 1, -4)
+Menu, Tray, NoStandard
+Menu, Tray, Add, % SubStr(A_ScriptName, 1, -4), F_TrayShowKeybGui
+Menu, Tray, Default, % SubStr(A_ScriptName, 1, -4)
+Menu, Tray, Add
+Menu, Tray, Add, Help, F_TrayHelp
+Menu, Tray, Add
+Menu, Tray, Add, Exit, F_TrayExit
+Menu, Tray, Click, 1
+
 OnMessage(0x06, "F_WM_ACTIVATE")  	;register callback F_WM_ACTIVATE to Windows Message WM_ACTIVATE := 0x0006
 F_InitiateInputHook()
 v_InputH.Start()
@@ -43,8 +47,58 @@ return
 ; end of initialization
 ; = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
+; section of hotkeys
+#If WinActive("ahk_id" KeybSHwnd)
+
+	~Control::
+		; OutputDebug, % "Ctrl Down" . "`n"
+		F_ShowCounters()			;Show values of individual counters
+		F_ColorGuiKeys()  			;Call your function when the specified GUI window is selected
+		F_UpdateDateTimeCounter()	;Update some GUI values: date, time, overall counter value
+	return	
+
+	~Control Up::
+		; OutputDebug, % "Ctrl Up" . "`n"
+		F_RestoreLabels() 			;Restore keyboard keys labels
+		F_ColorGuiKeys()  			;Call your function when the specified GUI window is selected
+		F_UpdateDateTimeCounter()	;Update some GUI values: date, time, overall counter value
+	return
+
+#If	;end #If
+
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - FUNCTIONS BLOCK
-F_ExitFunc(ExitReason, ExitCode)	;a function to be called automatically whenever the script exits. 
+F_TrayExit()
+{
+	; OutputDebug, % A_ThisFunc . "`n"
+	ExitApp, 0
+} 
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+F_RestoreLabels()
+{
+	global	;assume-global mode of operation
+	local	WhichHWND		:= 0
+
+	for WhichHWND in aKeyLabel
+		GuiControl,  
+		,	% WhichHWND
+		,	% aKeyLabel[WhichHWND] 
+}
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+F_TrayHelp()	;future
+{
+} 
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+F_TrayShowKeybGui()
+{
+	; OutputDebug, % A_ThisFunc . "`n"
+	Gui, KeybS: Show, Restore
+	Gui, KeybS: +LastFound		;this is described in ctcolors.ahk as a trick to redraw controls of a window
+     WinSet, ReDraw				;this is described in ctcolors.ahk as a trick to redraw controls of a window
+	F_ColorGuiKeys()  			;Call your function when the specified GUI window is selected
+	F_UpdateDateTimeCounter()	;Update some GUI values: date, time, overall counter value
+} 
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+F_ExitFunc(ExitReason)	;a function to be called automatically whenever the script exits. 
 {
 	global	;assume-global mode of operation
 	local	Folder			:= A_ScriptDir . "\" . "Log"	
@@ -57,11 +111,12 @@ F_ExitFunc(ExitReason, ExitCode)	;a function to be called automatically whenever
 		Case "Logoff", "Shutdown":
 			Text		:= CurrTime . A_Space . "Logoff or Shutdown…" . "`n"
 		Case "Exit":
+			; OutputDebug, % "Exit" . "`n"
 			Text		:= CurrTime . A_Space . "User closed window…" . "`n"
 		Default:
 			MsgBox, % 4 + 16, % SubStr(A_ScriptName, 1, -4), Are you sure you want to exit?	;4 = Yes/No, 16 = Stop Hand
 			IfMsgBox, Yes
-				Text	:= CurrTime . A_Space . "UserExits or reloads…" . "`n"
+				Text	:= CurrTime . A_Space . "User exits or reloads…" . "`n"
 	}
 	FileAppend, % Text
 		, % FileName
@@ -116,9 +171,9 @@ F_WM_ACTIVATE(wParam, lParam) ; Check if the GUI window is being activated
 	{  ; wParam 1 = activated by mouse, 2 = activated by keyboard ;for some reasons the lparam is always returned as null. In official Microsoft documentation: "This handle can be NULL." without any further explanation.
 		if WinActive(("ahk_id" KeybSHwnd))		; Check if the GUI window is active
 		{
-          	F_ColorGuiKeys()  			;Call your function when the specified GUI window is selected
+			F_ColorGuiKeys()  			;Call your function when the specified GUI window is selected
 			F_UpdateDateTimeCounter()	;Update some GUI values: date, time, overall counter value
-			F_LogValues()				;Values are logged after each check
+			; F_LogValues()				;Values are logged after each check
 		}
     	}
 	return 0	;documentation says about it
@@ -159,12 +214,13 @@ F_LogValues()
 	FileAppend, % Text
 		, % FileName
 		, UTF-8										;encoding
-	OutputDebug, % "ErrorLevel:" . ErrorLevel . "`n"
+	; OutputDebug, % "ErrorLevel:" . ErrorLevel . "`n"
 }
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 F_UpdateDateTimeCounter()
 {
 	global	;assume-global mode of operation
+	local	FormattedNum := Format("{:L}", vOverallCounter)	; Format the number with commas as thousand separators
 
 	GuiControl, 
 		, % Date							;HWND identifier of text control
@@ -172,27 +228,45 @@ F_UpdateDateTimeCounter()
 	GuiControl, 
 		, % Time							;HWND identifier of text control
 		, % A_Hour . ":" . A_Min . ":" . A_Sec	;update the time
+	FormattedNum := StrReplace(FormattedNum, ",", " ")
 	GuiControl, 
 		, % OvCount						;HWND identifier of text control
-		, % vOverallCounter					;update total counter value
+		, % FormattedNum					;update total counter value
+} 
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+F_ShowCounters()
+{
+	global	;assume-global mode of operation
+	local	index 		:= 1	
+		,	WhichHWND		:= "" 
+		,	CntVarName	:= ""
+
+	for index in aKeyboardCounters
+	{
+		WhichHWND		:= "KeybS_T" . aKeyboardCounters[index]
+	,	CntVarName 	:= "KC_" . aKeyboardCounters[index]	; KC = KeyCounter
+		GuiControl,  
+		,	% %WhichHWND%
+		,	% %CntVarName%
+	}
 } 
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 F_ColorGuiKeys() 
 {
 	global	;assume-global mode of operation
 	local	index 		:= 1
-		,	VarNameTemp 	:= ""
-		,	RefTemp 		:= 0
+		,	CntVarName 	:= ""
+		,	CntVal		:= 0
 		,	vWhichColor 	:= 0
-		,	WhichText		:= ""
+		,	WhichHWND		:= ""
 		,	MaxVal		:= 0
 
 	for index in aKeyboardCounters	;search for maximum value
 	{
-		VarNameTemp 	:= "KC_" . aKeyboardCounters[index]	; KC = KeyCounter
-	,	RefTemp 		:= %VarNameTemp%
-		if (RefTemp > MaxVal)
-			MaxVal 	:= RefTemp
+		CntVarName 	:= "KC_" . aKeyboardCounters[index]	; KC = KeyCounter
+	,	CntVal		:= %CntVarName%
+		if (CntVal > MaxVal)
+			MaxVal 	:= CntVal
 	}
 
 	; OutputDebug, % A_ThisFunc . A_Space . "vOverallCounter:" . vOverallCounter . "`n"
@@ -200,14 +274,13 @@ F_ColorGuiKeys()
 	index 			:= 1
 	for index in aKeyboardCounters
 	{
-		WhichText		:= "KeybS_T"
-	,	VarNameTemp 	:= "KC_" . aKeyboardCounters[index]	; KC = KeyCounter
-	,	RefTemp 		:= %VarNameTemp%
-		; OutputDebug, % aKeyboardCounters[index] . "|" . RefTemp . "`n"
-	,	vWhichColor 	:= Floor((RefTemp / MaxVal) * 100)	;Floor = rounding down to the nearest integer
-		WhichText 	.= aKeyboardCounters[index]
-		; OutputDebug, % "WhichText:" . WhichText . "|" . "%WhichText%:" . %WhichText% . "|" . "ColorArg:" . vWhichColor . "|" . "ColorVal:" . rgbColors[vWhichColor] . "`n"
-		CTLCOLORS.Change(%WhichText%, rgbColors[vWhichColor], "")
+		WhichHWND		:= "KeybS_T" . aKeyboardCounters[index]
+	,	CntVarName 	:= "KC_" . aKeyboardCounters[index]	; KC = KeyCounter
+	,	CntVal 		:= %CntVarName%
+		; OutputDebug, % aKeyboardCounters[index] . "|" . CntVal . "`n"
+	,	vWhichColor 	:= Floor((CntVal / MaxVal) * 100)	;Floor = rounding down to the nearest integer
+		; OutputDebug, % "WhichHWND:" . WhichHWND . "|" . "%WhichHWND%:" . %WhichHWND% . "|" . "ColorArg:" . vWhichColor . "|" . "ColorVal:" . rgbColors[vWhichColor] . "`n"
+		CTLCOLORS.Change(%WhichHWND%, rgbColors[vWhichColor], "")
 	}
 }
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -246,7 +319,7 @@ F_InputHookOnKeyUp(ih, VK, SC)
 		Case "/":		NewVariableName := "KC_" . "Slash"
 		Default:		NewVariableName := "KC_" . WhatWasUp	; Create a variable name dynamically based on WhatWasUp and assign it a value; KC = KeyCounter
 	}
-	OutputDebug, % "NewVariableName:" . NewVariableName . "`n"
+	; OutputDebug, % "NewVariableName:" . NewVariableName . "`n"
 	
 	if (!IsSet(%NewVariableName%))
 	{
