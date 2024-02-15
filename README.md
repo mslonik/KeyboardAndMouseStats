@@ -32,9 +32,9 @@ Left mouse click brings tiny menu:
 Hotkeys are active only when GUI window is active.
 
 | hotkey | meaning | comment |
-| :---         |     :---:      |          ---: |
+| :---         |     :---      |          ---: |
 | Control      | to display individual values for pressed keys     | left or right    |
-| F1 or ?      | to display this info       | _        |
+| F1 or ?      | to display this info       |         |
 | F2           | to copy current results to Clipboard | | 	
 | F3			| to copy heatmap scale to Clipboard | |
 | F4			| to save current results to log | |
