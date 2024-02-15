@@ -1,7 +1,18 @@
 ﻿/* 
  	Author:      	Maciej Słojewski (mslonik, http://mslonik.pl)
- 	Purpose:     	
- 	Description: 	
+ 	Purpose:     	Basic heatmap and statistics of pressed keyboard keys.
+ 	Description: 	Basic text-based GUI is displayed which mimics keyboard layout.
+				Simple monitoring of pressed keys with heat map.
+				Log is saved every hour since the beginning.
+
+				Control: to display individual values for pressed keys
+				F1 or ?: to display this info
+				F2: to copy current results to Clipboard
+				F3: to copy heatmap scale to Clipboard
+				F4: to save current results to log
+				Left mouse click into key name: current value in tooltip
+					displayed for 5 s
+	GitHub:		https://github.com/mslonik/KeyboardStats
  	License:     	MIT License
 	Year:		2024
 */
@@ -48,6 +59,8 @@ Menu, Tray
 	, F_TrayHelp
 Menu, Tray
 	, Add
+	, About
+	, F_About
 Menu, Tray
 	, Add
 	, Exit
@@ -107,6 +120,20 @@ F_TrayExit()
 {
 	; OutputDebug, % A_ThisFunc . "`n"
 	ExitApp, 0
+} 
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+F_About()
+{
+	MsgBox, 64
+		, % SubStr(A_ScriptName, 1, -4)
+		,
+(LTrim
+ 	Author:      	Maciej Słojewski (mslonik, http://mslonik.pl)
+ 	Description: 	Basic text-based GUI is displayed which mimics keyboard layout.
+	GitHub:		https://github.com/mslonik/KeyboardStats
+ 	License:     	MIT License
+	Year:		2024
+)
 } 
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 F_CurrValToClipboard()
@@ -322,8 +349,8 @@ F_UpdateDateTimeCounter()
 	{
 		Case 4, 5:
 			ThreeChar		:= SubStr(TempStr, -2)
-			TempStr		:= SubStr(TempStr, 1, FormLength - 3)
-			FormattedStr	:= TempStr . A_Space . ThreeChar
+		,	TempStr		:= SubStr(TempStr, 1, FormLength - 3)
+		,	FormattedStr	:= TempStr . A_Space . ThreeChar
 		Default:
 			FormattedStr	:= TempStr
 	}
@@ -379,7 +406,10 @@ F_ColorGuiKeys()
 		; OutputDebug, % aKeyboardCounters[index] . "|" . CntVal . "`n"
 	,	vWhichColor 	:= Ceil((CntVal / MaxVal) * 100)	;Floor = rounding down to the nearest integer
 		; OutputDebug, % "WhichHWND:" . WhichHWND . "|" . "%WhichHWND%:" . %WhichHWND% . "|" . "ColorArg:" . vWhichColor . "|" . "ColorVal:" . rgbColors[vWhichColor] . "`n"
-		CTLCOLORS.Change(%WhichHWND%, rgbColors[vWhichColor], "")
+		if (vWhichColor < 20)		;if the background is black (see color scale), set white color of text
+			CTLCOLORS.Change(%WhichHWND%, rgbColors[vWhichColor], "FFFFFF")
+		else
+			CTLCOLORS.Change(%WhichHWND%, rgbColors[vWhichColor], "")
 	}
 }
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
