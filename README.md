@@ -5,6 +5,10 @@ Microsoft Windows only.
 Statistics is saved in a log file every hour since the application starts.
 Written in [AutoHotkey][] language.
 
+## How to run it
+
+You need to install at first the [AutoHotkey][] language interpreter (open source, GNU GPL license). Next copy the files: **KeyboardStats.ahk** and **Lib** folder to any place in your hard disk. Click / press enter on **KeyboardStats.ahk**.
+
 ## Screen shots
 
 The default GUI, when some keyboard keys are already pressed:
