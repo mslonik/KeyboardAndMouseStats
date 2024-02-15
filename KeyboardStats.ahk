@@ -26,16 +26,35 @@ Critical, On
 F_GuiDefine_Keybs()
 Critical, Off
 
-Menu, Tray, NoMainWindow
-Menu, Tray, Tip, % SubStr(A_ScriptName, 1, -4)
-Menu, Tray, NoStandard
-Menu, Tray, Add, % SubStr(A_ScriptName, 1, -4), F_TrayShowKeybGui
-Menu, Tray, Default, % SubStr(A_ScriptName, 1, -4)
-Menu, Tray, Add
-Menu, Tray, Add, Help, F_TrayHelp
-Menu, Tray, Add
-Menu, Tray, Add, Exit, F_TrayExit
-Menu, Tray, Click, 1
+Menu, Tray
+	, NoMainWindow
+Menu, Tray
+	, Tip
+	, % SubStr(A_ScriptName, 1, -4)
+Menu, Tray
+	, NoStandard
+Menu, Tray
+	, Add
+	, % SubStr(A_ScriptName, 1, -4)
+	, F_TrayShowKeybGui
+Menu, Tray
+	, Default
+	, % SubStr(A_ScriptName, 1, -4)
+Menu, Tray
+	, Add
+Menu, Tray
+	, Add
+	, Help
+	, F_TrayHelp
+Menu, Tray
+	, Add
+Menu, Tray
+	, Add
+	, Exit
+	, F_TrayExit
+Menu, Tray
+	, Click
+	, 1
 
 OnMessage(0x06, "F_WM_ACTIVATE")  	;register callback F_WM_ACTIVATE to Windows Message WM_ACTIVATE := 0x0006
 F_InitiateInputHook()
