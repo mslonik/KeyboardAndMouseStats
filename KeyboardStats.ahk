@@ -64,6 +64,23 @@ return
 		F_UpdateDateTimeCounter()	;Update some GUI values: date, time, overall counter value
 	return
 
+	F1::							;to display help info
+	?::
+		F_TrayHelp()
+	return
+
+	F2::
+		F_CurrValToClipboard()
+	return
+
+	F3::							;to copy heatmap scale to Clipboard
+		F_HeatmapToClipboard()
+	return
+
+	F4::							;to save current results to log
+		F_LogValues()
+	return
+
 #If	;end #If
 
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - FUNCTIONS BLOCK
@@ -72,6 +89,34 @@ F_TrayExit()
 	; OutputDebug, % A_ThisFunc . "`n"
 	ExitApp, 0
 } 
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+F_CurrValToClipboard()
+{
+	global	;assume-global mode of operation
+
+	Clipboard := ""
+	Clipboard := F_PrepareCurrentVal()
+	ClipWait
+	MsgBox, 64
+		, % SubStr(A_ScriptName, 1, -4)
+		, Current values were copied into Clipboard
+}
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+F_HeatmapToClipboard()
+{
+	global	;assume-global mode of operation
+	local	index		:= 1
+		,	temp			:= "" 
+
+	Clipboard := ""
+	for index in rgbColors 
+		temp .= rgbColors[index] . "`n"  
+	Clipboard := temp
+	ClipWait
+	MsgBox, 64
+		, % SubStr(A_ScriptName, 1, -4)
+		, Heatmap scale was copied into Clipboard
+}
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 F_RestoreLabels()
 {
@@ -84,8 +129,23 @@ F_RestoreLabels()
 		,	% aKeyLabel[WhichHWND] 
 }
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-F_TrayHelp()	;future
+F_TrayHelp()
 {
+	MsgBox, 64
+		, % SubStr(A_ScriptName, 1, -4)
+		, 
+(LTrim
+	Simple monitoring of pressed keys with heat map.
+	Log is saved every hour since the beginning.
+
+	Control: to display individual values for pressed keys
+	F1 or ?: to display this info
+	F2: to copy current results to Clipboard
+	F3: to copy heatmap scale to Clipboard
+	F4: to save current results to log
+	Left mouse click into key name: current value in tooltip
+		displayed for 5 s
+)
 } 
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 F_TrayShowKeybGui()
@@ -173,13 +233,12 @@ F_WM_ACTIVATE(wParam, lParam) ; Check if the GUI window is being activated
 		{
 			F_ColorGuiKeys()  			;Call your function when the specified GUI window is selected
 			F_UpdateDateTimeCounter()	;Update some GUI values: date, time, overall counter value
-			; F_LogValues()				;Values are logged after each check
 		}
     	}
 	return 0	;documentation says about it
 }
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-F_LogValues()
+F_PrepareCurrentVal()
 {
 	global	;assume-global mode of operation
 	local	index 		:= 1		;index variable for "for" loop
@@ -187,8 +246,6 @@ F_LogValues()
 		,	VarNameTemp	:= ""
 		,	KCvalue		:= 0		;Key Counter value
 		,	Text			:= ""	;what to put in the log
-		,	Folder		:= ""
-		,	FileName		:= ""
 
 	Text 			:= A_Year . "-" . A_MM . "-" . A_DD . A_Space . A_Hour . ":" . A_Min . ":" . A_Sec . "`n"
 	Text				.= "Overall" . "," . vOverallCounter . "`n"
@@ -200,8 +257,18 @@ F_LogValues()
 		Text			.= WhichKeyName . "," . A_Space . KCvalue . ";"
 	}
 	Text				.= "`n`n"
+	return Text
+}
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+F_LogValues()
+{
+	global	;assume-global mode of operation
+	local	Folder		:= ""
+		,	FileName		:= ""
+		,	Text			:= ""
 
-	Folder			:= A_ScriptDir . "\" . "Log"
+	Text 			:= F_PrepareCurrentVal()
+,	Folder			:= A_ScriptDir . "\" . "Log"
 ,	FileName			:= Folder . "\" . A_Year . A_MM . A_DD . "_" . SubStr(A_ScriptName, 1, -4) . "DailyLog" . ".csv" 
 
 	if (!InStr(FileExist(Folder), "D"))
@@ -220,7 +287,10 @@ F_LogValues()
 F_UpdateDateTimeCounter()
 {
 	global	;assume-global mode of operation
-	local	FormattedNum := Format("{:L}", vOverallCounter)	; Format the number with commas as thousand separators
+	local	TempStr	 	:= vOverallCounter . "" 	;convert a number to a text string
+		,	FormLength	:= StrLen(TempStr)
+		,	FormattedStr	:= ""
+		,	ThreeChar		:= ""
 
 	GuiControl, 
 		, % Date							;HWND identifier of text control
@@ -228,10 +298,20 @@ F_UpdateDateTimeCounter()
 	GuiControl, 
 		, % Time							;HWND identifier of text control
 		, % A_Hour . ":" . A_Min . ":" . A_Sec	;update the time
-	FormattedNum := StrReplace(FormattedNum, ",", " ")
+
+	Switch FormLength	;set space as thousand separator
+	{
+		Case 4, 5:
+			ThreeChar		:= SubStr(TempStr, -2)
+			TempStr		:= SubStr(TempStr, 1, FormLength - 3)
+			FormattedStr	:= TempStr . A_Space . ThreeChar
+		Default:
+			FormattedStr	:= TempStr
+	}
+
 	GuiControl, 
 		, % OvCount						;HWND identifier of text control
-		, % FormattedNum					;update total counter value
+		, % FormattedStr					;update total counter value
 } 
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 F_ShowCounters()
@@ -278,7 +358,7 @@ F_ColorGuiKeys()
 	,	CntVarName 	:= "KC_" . aKeyboardCounters[index]	; KC = KeyCounter
 	,	CntVal 		:= %CntVarName%
 		; OutputDebug, % aKeyboardCounters[index] . "|" . CntVal . "`n"
-	,	vWhichColor 	:= Floor((CntVal / MaxVal) * 100)	;Floor = rounding down to the nearest integer
+	,	vWhichColor 	:= Ceil((CntVal / MaxVal) * 100)	;Floor = rounding down to the nearest integer
 		; OutputDebug, % "WhichHWND:" . WhichHWND . "|" . "%WhichHWND%:" . %WhichHWND% . "|" . "ColorArg:" . vWhichColor . "|" . "ColorVal:" . rgbColors[vWhichColor] . "`n"
 		CTLCOLORS.Change(%WhichHWND%, rgbColors[vWhichColor], "")
 	}
