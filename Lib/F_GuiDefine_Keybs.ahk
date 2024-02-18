@@ -1138,7 +1138,7 @@
 		.	"Hwnd" . "DPI" . A_Space
 		; . 	"Border" . A_Space 
 		; .	"g" . "F_OnText"
-		,	% "1600"
+		,	% vDPI . ""	;converion of value into text string
 
 	GuiControlGet, vControlPos, Pos
 		,	% OvKCount	;overall keyboard counter

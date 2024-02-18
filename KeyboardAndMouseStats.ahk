@@ -1,9 +1,11 @@
 ﻿/* 
  	Author:      	Maciej Słojewski (mslonik, http://mslonik.pl)
- 	Purpose:     	Basic heatmap and statistics of pressed keyboard keys.
+ 	Purpose:     	Basic heatmap and statistics of pressed keyboard keys, 
+				clicked mouse buttons and distance travelled by mouse over a desk.
  	Description: 	Basic text-based GUI is displayed which mimics keyboard layout.
+				Also mouse is monitered against clicks, wheel up and down, travelled cursor distance.
 				Simple monitoring of pressed keys with heat map.
-				Log is saved every hour since the beginning.
+				Log is saved every hour since script started to work.
 
 				Control: to display individual values for pressed keys
 				F1 or ?: to display this info
@@ -357,9 +359,16 @@ F_TrayHelp()
 		, 
 (LTrim
 	Simple monitoring of pressed keys with heat map.
-	Log is saved every hour since the beginning.
+	Mouse: clicks, wheel up/down, travelled distance
+	Log is saved every hour since script started to work.
+	For more information visit:
+	https://github.com/mslonik/KeyboardAndMouseStats
+	Press Ctrl+C to copy this message box into a clipboard.
 
-	Control: to display individual values for pressed keys
+	When GUI is active:
+	
+	Control up/down: toggle individual values for pressed keys
+	Mouse click up/down: toggle individual values for pressed keys
 	F1 or ?: to display this info
 	F2: to copy current results to Clipboard
 	F3: to copy heatmap scale to Clipboard
@@ -479,6 +488,7 @@ F_PrepareCurrentVal()
 		,	VarNameTemp	:= ""
 		,	KCvalue		:= 0		;Key Counter value
 		,	Text			:= ""	;what to put in the log
+		,	temp			:= ""
 
 	Text 			:= A_Year . "-" . A_MM . "-" . A_DD . A_Space . A_Hour . ":" . A_Min . ":" . A_Sec . "`n"
 	Text				.= "Overall keyboard" 	. "," . vOverallKCounter . "`n"
@@ -496,7 +506,9 @@ F_PrepareCurrentVal()
 	Text				.= "RButton" 		. "," . A_Space . vRightClicks	. ";"
 	Text				.= "WheelUp" 		. "," . A_Space . vRollUpCounts	. ";"
 	Text				.= "WheelDown" 	. "," . A_Space . vRollDownCounts	. ";"
-	Text				.= "Dist. [m]"		. "," . A_Space . vDistM			. ";"
+	temp	:= F_FormatValToStr(vDistM)
+,	temp	:= Format("{1:-6.2f}", temp)
+	Text				.= "Dist. [m]"		. "," . A_Space . temp			. ";"
 	Text				.= "Dist. [px]"	. "," . A_Space . vDistPix		. ";"
 	Text				.= "mouse DPI"		. "," . A_Space . vDPI			. ";"
 	Text				.= "`n`n"
