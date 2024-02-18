@@ -1051,7 +1051,7 @@
 		,	% "xm" . A_Space
 		.	"Hwnd" . "MBLeft" . A_Space
 		. 	"Border" . A_Space 
-		; .	"g" . "F_OnText"
+		.	"g" . "F_MouseText"
 		,	% "  left  "
 
 	Gui, KeybS: Add
@@ -1059,7 +1059,7 @@
 		,	% "x+m" . A_Space
 		.	"Hwnd" . "MBMiddle" . A_Space
 		. 	"Border" . A_Space 
-		; .	"g" . "F_OnText"
+		.	"g" . "F_MouseText"
 		,	% " middle "
 
 	Gui, KeybS: Add
@@ -1067,7 +1067,7 @@
 		,	% "x+m" . A_Space
 		.	"Hwnd" . "MBRight" . A_Space
 		. 	"Border" . A_Space 
-		; .	"g" . "F_OnText"
+		.	"g" . "F_MouseText"
 		,	% " right "
 
 	Gui, KeybS: Add
@@ -1075,7 +1075,7 @@
 		,	% "x+20" . A_Space
 		.	"Hwnd" . "RollUp" . A_Space
 		. 	"Border" . A_Space 
-		; .	"g" . "F_OnText"
+		.	"g" . "F_MouseText"
 		,	% "   up   "
 
 	Gui, KeybS: Add
@@ -1083,7 +1083,7 @@
 		,	% "x+m" . A_Space
 		.	"Hwnd" . "RollDown" . A_Space
 		. 	"Border" . A_Space 
-		; .	"g" . "F_OnText"
+		.	"g" . "F_MouseText"
 		,	% "  down  "
 
 	Gui, KeybS: Add

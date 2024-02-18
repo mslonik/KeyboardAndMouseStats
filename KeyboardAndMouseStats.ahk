@@ -406,7 +406,19 @@ F_ExitFunc(ExitReason)	;a function to be called automatically whenever the scrip
 	; Do not call ExitApp -- that would prevent other callbacks from being called.
 }
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-F_OnText()	;when text control is clicked with mouse
+F_MouseText()	;it doesn't work anymore
+{
+	global	;assume-global mode of operation
+	local	vHWND 		:= 0
+		,	OutputVar 	:= 0
+
+	MouseGetPos, , , , vHWND, 2		;vHWND contains HWND of text control in hexadecimal format
+	GuiControlGet, OutputVar, , vHWND
+	ToolTip, % OutputVar			;show information on screen
+	SetTimer, F_RemoveToolTip, -5000	;"-" = one time only, 5000 ms = 5 s
+}
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+F_OnText()	;when text control is clicked with mouse ;it doesn't work anymore
 {
 	global	;assume-global mode of operation
 	local	vHWND 	:= 0
@@ -659,7 +671,7 @@ F_ColorGuiKeys()
 		; OutputDebug, % aKeyboardCounters[index] . "|" . CntVal . "`n"
 	,	vWhichColor 	:= Ceil((CntVal / MaxVal) * 100)	;Floor = rounding down to the nearest integer
 		; OutputDebug, % "WhichHWND:" . WhichHWND . "|" . "%WhichHWND%:" . %WhichHWND% . "|" . "ColorArg:" . vWhichColor . "|" . "ColorVal:" . rgbColors[vWhichColor] . "`n"
-		if (vWhichColor < 20)		;if the background is dark (see color scale), set white color of text
+		if (vWhichColor < 30)		;if the background is dark (see color scale), set white color of text
 			CTLCOLORS.Change(%WhichHWND%, rgbColors[vWhichColor], "FFFFFF")
 		else
 			CTLCOLORS.Change(%WhichHWND%, rgbColors[vWhichColor], "")
@@ -668,7 +680,7 @@ F_ColorGuiKeys()
 	if (vLeftClicks > 0)
 	{
 		vWhichColor 	:= Ceil((vLeftClicks / MaxVal) * 100)	;Floor = rounding down to the nearest integer
-		if (vWhichColor < 20)		;if the background is dark (see color scale), set white color of text
+		if (vWhichColor < 30)		;if the background is dark (see color scale), set white color of text
 			CTLCOLORS.Change(MBLeft, rgbColors[vWhichColor], "FFFFFF")
 		else
 			CTLCOLORS.Change(MBLeft, rgbColors[vWhichColor], "")
@@ -677,7 +689,7 @@ F_ColorGuiKeys()
 	if (vMiddleClicks > 0)
 	{
 		vWhichColor 	:= Ceil((vMiddleClicks / MaxVal) * 100)	;Floor = rounding down to the nearest integer
-		if (vWhichColor < 20)		;if the background is dark (see color scale), set white color of text
+		if (vWhichColor < 30)		;if the background is dark (see color scale), set white color of text
 			CTLCOLORS.Change(MBMiddle, rgbColors[vWhichColor], "FFFFFF")
 		else
 			CTLCOLORS.Change(MBMiddle, rgbColors[vWhichColor], "")
@@ -686,7 +698,7 @@ F_ColorGuiKeys()
 	if (vRightClicks > 0)
 	{
 		vWhichColor 	:= Ceil((vRightClicks / MaxVal) * 100)	;Floor = rounding down to the nearest integer
-		if (vWhichColor < 20)		;if the background is dark (see color scale), set white color of text
+		if (vWhichColor < 30)		;if the background is dark (see color scale), set white color of text
 			CTLCOLORS.Change(MBRight, rgbColors[vWhichColor], "FFFFFF")
 		else
 			CTLCOLORS.Change(MBRight, rgbColors[vWhichColor], "")
@@ -695,7 +707,7 @@ F_ColorGuiKeys()
 	if (vRollUpCounts > 0)
 	{
 		vWhichColor 	:= Ceil((vRollUpCounts / MaxVal) * 100)	;Floor = rounding down to the nearest integer
-		if (vWhichColor < 20)		;if the background is dark (see color scale), set white color of text
+		if (vWhichColor < 30)		;if the background is dark (see color scale), set white color of text
 			CTLCOLORS.Change(RollUp, rgbColors[vWhichColor], "FFFFFF")
 		else
 			CTLCOLORS.Change(RollUp, rgbColors[vWhichColor], "")
@@ -704,7 +716,7 @@ F_ColorGuiKeys()
 	if (vRollDownCounts > 0)
 	{
 		vWhichColor 	:= Ceil((vRollDownCounts / MaxVal) * 100)	;Floor = rounding down to the nearest integer
-		if (vWhichColor < 20)		;if the background is dark (see color scale), set white color of text
+		if (vWhichColor < 30)		;if the background is dark (see color scale), set white color of text
 			CTLCOLORS.Change(RollDown, rgbColors[vWhichColor], "FFFFFF")
 		else
 			CTLCOLORS.Change(RollDown, rgbColors[vWhichColor], "")

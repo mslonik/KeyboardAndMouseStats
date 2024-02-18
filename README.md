@@ -17,12 +17,9 @@ The default GUI, when some keyboard keys are already pressed:
 After pressing Ctrl key you get statistics about specific keys:
 ![GUI 1](/pictures/GUI02.png)
 
-After clicking of a key with left mouse button the tooltip is displayed for 5 s:
-![GUI 1](/pictures/GUI03.png)
-
 ## Activation
 
-Click in system tray, next in icon of **KeyboardAndMouseStats**, left mouse click. The GUI will be displayed in the front of your default monitor.
+Click in system tray, next in icon of **KeyboardAndMouseStats**, left mouse click. The GUI will be displayed in the front of your default monitor. If in doubt, hover mouse cursor over the icons. The one belonging to **KeyboardAndMouseStats** will show its name in tooltip.
 
 Left mouse click brings tiny menu:
 ![GUI 1](/pictures/Tray01.png)
