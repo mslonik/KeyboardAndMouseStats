@@ -47,9 +47,11 @@ Hotkeys are active only when GUI window is active.
 
 To toggle between names of keys / buttons and values of respective counters just press and hold Control keyboard key (press to display values, release to switch back to names of keys). The same works for any mouse key.
 
+The values in the first column to the right are total sum of counted values: top - keyboard, bottom - mouse.
+
 For mouse cursor there are displayed values of real distance travelled by mouse body over a surface, estimated in meters [m]. It is possible if mouse resolution, aka DPI (Dots Per Inch) is known. The default value, 1600, is hardcoded in a script. If you wish to change it, search in **KeyboardAndMouseStats.ahk** for **vDPI**. If you wish to determine DPI for your mouse, follow the directions found in [this video][].
 
-The values in the first column to the right are total sum of counted values: top - keyboard, bottom - mouse.
+The distance is calculated only between consecutive mouse clicks, what reduces overall accuracy. Please note that for better accuracy the setting *Enhance pointer precision* of a mouse should be disabled. 
 
 [AutoHotkey]: https://www.autohotkey.com/
 [this video]: https://youtu.be/pTMJX-hVMsQ?si=I-aWrj2YzUQjicoe
