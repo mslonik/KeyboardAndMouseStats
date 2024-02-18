@@ -7,6 +7,8 @@
 		,	vControlPosW 	:= 0
 		,	vControlPosH 	:= 0
 		,	HWNDaddress	:= 0
+		,	vTemp1		:= 0
+		,	vTemp2		:= 0
 
 	Gui, KeybS: New
 		, -Resize +HwndKeybSHwnd -MaximizeBox	;+Owner: An owned window has no taskbar button by default, no separate icon on taskbar when script is launched.
@@ -1030,15 +1032,131 @@
 	Gui, KeybS: Add
 		, 	Text
 		,	% "x" . vControlPosX + vControlPosW + 25 . A_Space . "y" . vControlPosY . A_Space
-		. 	"Hwnd" . "OvCount"  . A_Space 
+		. 	"Hwnd" . "OvKCount" . A_Space 
 		; . 	"Border" . A_Space 
 		; .	"g" . "F_OnText"
 		,	% "99 999"	;placeholder, occupies space
 	GuiControl, 
-		, % OvCount
+		, % OvKCount
 		, 0
 
 	F_ColorScale()
+
+	;section of mouse buttons
+	GuiControlGet, vControlPos, Pos
+		, % KeybS_TS1
+
+	Gui, KeybS: Add
+		, 	Text
+		,	% "xm" . A_Space
+		.	"Hwnd" . "MBLeft" . A_Space
+		. 	"Border" . A_Space 
+		; .	"g" . "F_OnText"
+		,	% "  left  "
+
+	Gui, KeybS: Add
+		, 	Text
+		,	% "x+m" . A_Space
+		.	"Hwnd" . "MBMiddle" . A_Space
+		. 	"Border" . A_Space 
+		; .	"g" . "F_OnText"
+		,	% " middle "
+
+	Gui, KeybS: Add
+		, 	Text
+		,	% "x+m" . A_Space
+		.	"Hwnd" . "MBRight" . A_Space
+		. 	"Border" . A_Space 
+		; .	"g" . "F_OnText"
+		,	% " right "
+
+	Gui, KeybS: Add
+		, 	Text
+		,	% "x+20" . A_Space
+		.	"Hwnd" . "RollUp" . A_Space
+		. 	"Border" . A_Space 
+		; .	"g" . "F_OnText"
+		,	% "   up   "
+
+	Gui, KeybS: Add
+		, 	Text
+		,	% "x+m" . A_Space
+		.	"Hwnd" . "RollDown" . A_Space
+		. 	"Border" . A_Space 
+		; .	"g" . "F_OnText"
+		,	% "  down  "
+
+	Gui, KeybS: Add
+		, 	Text
+		,	% "x+50" . A_Space
+		.	"Hwnd" . "Distm" . A_Space
+		; . 	"Border" . A_Space 
+		; .	"g" . "F_OnText"
+		,	% "999.99"
+	GuiControl,		;initialization of the displayed value
+		,	% Distm
+		,	0
+
+	Gui, KeybS: Add
+		, 	Text
+		,	% "x+m" . A_Space
+		.	"Hwnd" . "Mname" . A_Space
+		; . 	"Border" . A_Space 
+		; .	"g" . "F_OnText"
+		,	% "[m]"
+
+	Gui, KeybS: Add
+		, 	Text
+		,	% "x+50" . A_Space
+		.	"Hwnd" . "Distpx" . A_Space
+		; . 	"Border" . A_Space 
+		; .	"g" . "F_OnText"
+		,	% "99 999 999"
+	GuiControl,
+		,	% Distpx
+		,	0		;initialization of the displayed value
+
+	Gui, KeybS: Add
+		, 	Text
+		,	% "x+m" . A_Space
+		.	"Hwnd" . "Pxname" . A_Space
+		; . 	"Border" . A_Space 
+		; .	"g" . "F_OnText"
+		,	% "[px]"
+
+	Gui, KeybS: Add
+		, 	Text
+		,	% "x+50" . A_Space
+		.	"Hwnd" . "DPI" . A_Space
+		; . 	"Border" . A_Space 
+		; .	"g" . "F_OnText"
+		,	% "DPI:"
+
+	Gui, KeybS: Add
+		, 	Text
+		,	% "x+m" . A_Space
+		.	"Hwnd" . "DPI" . A_Space
+		; . 	"Border" . A_Space 
+		; .	"g" . "F_OnText"
+		,	% "1600"
+
+	GuiControlGet, vControlPos, Pos
+		,	% OvKCount	;overall keyboard counter
+	vTemp1	:= vControlPosX
+	GuiControlGet, vControlPos, Pos
+		,	% "DPI"		;overall keyboard counter
+
+	Gui, KeybS: Add
+		, 	Text
+		,	% "x" . vTemp1 . A_Space
+		.	"y" . vControlPosY . A_Space
+		.	"Hwnd" . "OvMCount" . A_Space
+		; . 	"Border" . A_Space 
+		; .	"g" . "F_OnText"
+		,	% "99 999"		;placeholder, occupies 
+	GuiControl, 
+		, % OvMCount
+		, 0					;initialization with value
 
 	Gui, KeybS: Show
 		, Hide Center AutoSize

@@ -28,51 +28,32 @@ FileEncoding, 			UTF-16		; Sets the default encoding for FileRead, FileReadLine,
 ; = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 #include %A_ScriptDir%\Lib\ctcolors.ahk	;https://gist.github.com/AHK-just-me/5882556
 
-	vOverallCounter 	:= 0		;overall number of recorded keyboard keys which were up after pressing
+	vOverallKCounter 	:= 0		;overall number of recorded keyboard keys which were up after pressing
+,	vOverallMCounter	:= 0		;overall number of recorder mouse activities
 ,	aKeyboardCounters 	:= {}	;array variable to store KC (key counters) variable names (not values of counters, which are stored in variables "KC_" concatenated with variable name) 
 ,	aHWNDToVariable 	:= {}	;array variable (associative) to store names of HWND variable names and HWND values (hexadecimal addresses)
 ,	aKeyLabel			:= {}	;array variable to store initial keyboard key labels
+,	vLeftClicks		:= 0		;number of LButton mouse clicks
+,	vMiddleClicks		:= 0		;number of MButton mouse clicks
+,	vRightClicks		:= 0		;number of RButton mouse clicks
+,	vRollUpCounts		:= 0		;number of mouse WheelUp steps
+,	vRollDownCounts	:= 0		;number of mouse WheelUp steps
+,	vDistPix			:= 0		;distance travelled by mouse pointer in [px]
+,	vDistM			:= 0		;distance travelled by mouse pointer in [m]
+,	vDPI				:= 1600	;actual value for Lenovo mouse M/N: MSU1175
 
 Critical, On
 F_GuiDefine_Keybs()
 Critical, Off
 
-Menu, Tray
-	, NoMainWindow
-Menu, Tray
-	, Tip
-	, % SubStr(A_ScriptName, 1, -4)
-Menu, Tray
-	, NoStandard
-Menu, Tray
-	, Add
-	, % SubStr(A_ScriptName, 1, -4)
-	, F_TrayShowKeybGui
-Menu, Tray
-	, Default
-	, % SubStr(A_ScriptName, 1, -4)
-Menu, Tray
-	, Add
-Menu, Tray
-	, Add
-	, Help
-	, F_TrayHelp
-Menu, Tray
-	, Add
-	, About
-	, F_About
-Menu, Tray
-	, Add
-	, Exit
-	, F_TrayExit
-Menu, Tray
-	, Click
-	, 1
-
+F_PrepareTrayMenu()
 OnMessage(0x06, "F_WM_ACTIVATE")  	;register callback F_WM_ACTIVATE to Windows Message WM_ACTIVATE := 0x0006
 F_InitiateInputHook()
 v_InputH.Start()
-SetTimer, F_LogValues, % 1000 * 60 * 60	; 1 hour: 1000 ms = 1 s,  60 s = 1 min., 60 min. = 1 h
+SetTimer,	F_CheckMidnight	;at midnight reset all counters
+	, % 1000 * 60			;run every 1 minute: 1000 ms = 1 s, 60 s = 1 min.
+SetTimer, F_LogValues		;every hour log counter values
+	, % 1000 * 60 * 60		; run every 1 hour: 1000 ms = 1 s,  60 s = 1 min., 60 min. = 1 h
 OnExit("F_ExitFunc")
 return
 ; = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
@@ -80,18 +61,53 @@ return
 ; = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
 ; section of hotkeys
+
+; Monitor left, right, and middle mouse clicks
+~LButton::	
+	vLeftClicks++
+	vOverallMCounter++
+	F_MCalcDist()
+	F_UpdateGuiValue()	;update values displayed in GUI each time mouse button is pressed
+return
+
+~RButton::	
+	vRightClicks++
+	vOverallMCounter++
+	F_MCalcDist()
+	F_UpdateGuiValue()	;update values displayed in GUI each time mouse button is pressed
+return
+
+~MButton::	
+	vMiddleClicks++
+	vOverallMCounter++
+	F_MCalcDist()
+	F_UpdateGuiValue()	;update values displayed in GUI each time mouse button is pressed
+return
+
+~WheelUp::	
+	vRollUpCounts++
+	vOverallMCounter++
+return
+
+~WheelDown::	
+	vRollDownCounts++
+	vOverallMCounter++
+return
+
 #If WinActive("ahk_id" KeybSHwnd)
 
 	~Control::
 		; OutputDebug, % "Ctrl Down" . "`n"
-		F_ShowCounters()			;Show values of individual counters
+		F_ShowKCount()				;Show values of individual counters
+		F_ShowMCount()
 		F_ColorGuiKeys()  			;Call your function when the specified GUI window is selected
 		F_UpdateDateTimeCounter()	;Update some GUI values: date, time, overall counter value
 	return	
 
 	~Control Up::
 		; OutputDebug, % "Ctrl Up" . "`n"
-		F_RestoreLabels() 			;Restore keyboard keys labels
+		F_RestoreKLabels() 			;Restore keyboard keys labels
+		F_RestoreMLabels()
 		F_ColorGuiKeys()  			;Call your function when the specified GUI window is selected
 		F_UpdateDateTimeCounter()	;Update some GUI values: date, time, overall counter value
 	return
@@ -116,6 +132,101 @@ return
 #If	;end #If
 
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - FUNCTIONS BLOCK
+F_UpdateGuiValue()
+{
+	global	;assume-global mode of operation
+	local	OutputVarWin := 0
+
+	MouseGetPos, , , OutputVarWin, , 2
+	; OutputDebug, % "OutputVarWin:" . OutputVarWin . "HwndKeybSHwnd:" . KeybSHwnd . "`n"
+	if (OutputVarWin = KeybSHwnd)
+	{
+		F_ShowKCount()				;Show values of individual counters
+		F_ShowMCount()
+		F_ColorGuiKeys()  			;Call your function when the specified GUI window is selected
+		F_UpdateDateTimeCounter()	;Update some GUI values: date, time, overall counter value
+	}
+}
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+F_CheckMidnight()
+{
+	global	;assume-global mode of operation
+	static 	LastDay		:= A_DD	;keep track of the last day
+	local	CurrentDay	:= 0
+
+	CurrentDay	:= A_DD			;get the current day
+	if (CurrentDay != LastDay)
+	{
+		vOverallKCounter 	:= 0		;overall number of recorded keyboard keys which were up after pressing
+	,	vOverallMCounter	:= 0		;overall number of recorder mouse activities
+	,	vLeftClicks		:= 0		;number of LButton mouse clicks
+	,	vMiddleClicks		:= 0		;number of MButton mouse clicks
+	,	vRightClicks		:= 0		;number of RButton mouse clicks
+	,	vRollUpCounts		:= 0		;number of mouse WheelUp steps
+	,	vRollDownCounts	:= 0		;number of mouse WheelUp steps
+	,	vDistPix			:= 0		;distance travelled by mouse pointer in [px]
+	,	vDistM			:= 0		;distance travelled by mouse pointer in [m]
+	,	LastDay 			:= CurrentDay
+	}
+}
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+F_PrepareTrayMenu()
+{
+	Menu, Tray
+		, NoMainWindow
+	Menu, Tray
+		, Tip
+		, % SubStr(A_ScriptName, 1, -4)
+	Menu, Tray
+		, NoStandard
+	Menu, Tray
+		, Add
+		, % SubStr(A_ScriptName, 1, -4)
+		, F_TrayShowKeybGui
+	Menu, Tray
+		, Default
+		, % SubStr(A_ScriptName, 1, -4)
+	Menu, Tray
+		, Add
+	Menu, Tray
+		, Add
+		, Help
+		, F_TrayHelp
+	Menu, Tray
+		, Add
+		, About
+		, F_About
+	Menu, Tray
+		, Add
+		, Exit
+		, F_TrayExit
+	Menu, Tray
+		, Click
+		, 1
+}
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+F_MCalcDist()
+{
+	global	;assume-global mode of operation
+	static	PrevX 	:= 0
+		,	PrevY 	:= 0
+	local	NewX		:= 0
+		,	NewY		:= 0
+		,	DistPix	:= 0
+		,	Temp		:= 0
+
+	MouseGetPos, NewX, NewY
+	if (NewX != PrevX) or (NewY != PrevY)
+	{
+		DistPix		:= Floor(Sqrt((NewX - PrevX) ** 2 + (NewY - PrevY) ** 2)) 
+		vDistPix	 	+= DistPix
+		Temp			:= DistPix / vDPI	;in [''] = inches
+		vDistM		+= Temp * 0.0254
+		PrevX		:= NewX
+	,	PrevY		:= NewY
+	}
+}
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 F_TrayExit()
 {
 	; OutputDebug, % A_ThisFunc . "`n"
@@ -141,7 +252,7 @@ F_CurrValToClipboard()
 	global	;assume-global mode of operation
 
 	Clipboard := ""
-	Clipboard := F_PrepareCurrentVal()
+,	Clipboard := F_PrepareCurrentVal()
 	ClipWait
 	MsgBox, 64
 		, % SubStr(A_ScriptName, 1, -4)
@@ -164,7 +275,33 @@ F_HeatmapToClipboard()
 		, Heatmap scale was copied into Clipboard
 }
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-F_RestoreLabels()
+F_RestoreMLabels()
+{
+	global	;assume-global mode of operation
+
+	GuiControl, 
+		, % MBLeft
+		, % "  left  "
+
+	GuiControl, 
+		, % MBMiddle
+		, % " middle "
+
+	GuiControl, 
+		, % MBRight
+		, % " right "
+
+	GuiControl, 
+		, % RollUp
+		, % "  up  "
+
+	GuiControl, 
+		, % RollDown
+		, % " down "
+
+}
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+F_RestoreKLabels()
 {
 	global	;assume-global mode of operation
 	local	WhichHWND		:= 0
@@ -294,7 +431,7 @@ F_PrepareCurrentVal()
 		,	Text			:= ""	;what to put in the log
 
 	Text 			:= A_Year . "-" . A_MM . "-" . A_DD . A_Space . A_Hour . ":" . A_Min . ":" . A_Sec . "`n"
-	Text				.= "Overall" . "," . vOverallCounter . "`n"
+	Text				.= "Overall" . "," . vOverallKCounter . "`n"
 	for index in aKeyboardCounters
 	{
 		WhichKeyName	:= aKeyboardCounters[index]
@@ -330,13 +467,36 @@ F_LogValues()
 	; OutputDebug, % "ErrorLevel:" . ErrorLevel . "`n"
 }
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-F_UpdateDateTimeCounter()
+F_FormatValToStr(Counter)
 {
 	global	;assume-global mode of operation
-	local	TempStr	 	:= vOverallCounter . "" 	;convert a number to a text string
+	local	TempStr	 	:= Counter . "" 	;convert a number to a text string
 		,	FormLength	:= StrLen(TempStr)
 		,	FormattedStr	:= ""
 		,	ThreeChar		:= ""
+		,	ThreeChar2	:= ""
+
+	Switch FormLength	;set space as thousand separator
+	{
+		Case 4, 5, 6:
+			ThreeChar		:= SubStr(TempStr, -2)
+		,	TempStr		:= SubStr(TempStr, 1, FormLength - 3)
+		,	FormattedStr	:= TempStr . A_Space . ThreeChar
+		Case 7, 8:
+			ThreeChar		:= SubStr(TempStr, -2)
+		,	TempStr		:= SubStr(TempStr, 1, FormLength - 3)
+		,	ThreeChar2	:= SubStr(TempStr, -2)
+		,	FormattedStr	:= TempStr . A_Space . ThreeChar2 . A_Space . ThreeChar
+		Default:
+			FormattedStr	:= TempStr
+	}
+	return FormattedStr
+}
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+F_UpdateDateTimeCounter()
+{
+	global	;assume-global mode of operation
+	local	temp := 0
 
 	GuiControl, 
 		, % Date							;HWND identifier of text control
@@ -345,22 +505,52 @@ F_UpdateDateTimeCounter()
 		, % Time							;HWND identifier of text control
 		, % A_Hour . ":" . A_Min . ":" . A_Sec	;update the time
 
-	Switch FormLength	;set space as thousand separator
-	{
-		Case 4, 5:
-			ThreeChar		:= SubStr(TempStr, -2)
-		,	TempStr		:= SubStr(TempStr, 1, FormLength - 3)
-		,	FormattedStr	:= TempStr . A_Space . ThreeChar
-		Default:
-			FormattedStr	:= TempStr
-	}
+	GuiControl, 
+		, % OvKCount						;HWND identifier of text control
+		, % F_FormatValToStr(vOverallKCounter)	;update total counter value
 
 	GuiControl, 
-		, % OvCount						;HWND identifier of text control
-		, % FormattedStr					;update total counter value
+		, % OvMCount						;HWND identifier of text control
+		, % F_FormatValToStr(vOverallMCounter)	;update total counter value
 } 
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-F_ShowCounters()
+F_ShowMCount()
+{
+	global	;assume-global mode of operation
+	local	temp := 0
+
+	GuiControl, 
+		, % MBLeft
+		, % vLeftClicks
+
+	GuiControl, 
+		, % MBMiddle
+		, % vMiddleClicks
+
+	GuiControl, 
+		, % MBRight
+		, % vRightClicks
+
+	GuiControl, 
+		, % RollUp
+		, % vRollUpCounts
+
+	GuiControl, 
+		, % RollDown
+		, % vRollDownCounts
+
+	GuiControl,
+		, % Distpx
+		, % F_FormatValToStr(vDistPix)
+
+	temp	:= F_FormatValToStr(vDistM)
+,	temp	:= Format("{1:-6.2f}", temp)
+	GuiControl,
+		, % Distm
+		, % temp
+}
+; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+F_ShowKCount()
 {
 	global	;assume-global mode of operation
 	local	index 		:= 1	
@@ -395,7 +585,22 @@ F_ColorGuiKeys()
 			MaxVal 	:= CntVal
 	}
 
-	; OutputDebug, % A_ThisFunc . A_Space . "vOverallCounter:" . vOverallCounter . "`n"
+	if (vLeftClicks > MaxVal)
+		MaxVal		:= vLeftClicks
+
+	if (vMiddleClicks > MaxVal)
+		MaxVal		:= vMiddleClicks
+
+	if (vRightClicks > MaxVal)
+		MaxVal		:= vRightClicks
+
+	if (vRollUpCounts > MaxVal)
+		MaxVal		:= vRollUpCounts
+
+	if (vRollDownCounts > MaxVal)
+		MaxVal		:= vRollDownCounts
+
+	; OutputDebug, % A_ThisFunc . A_Space . "vOverallKCounter:" . vOverallKCounter . "`n"
 	; OutputDebug, % "MaxVal:" . MaxVal . "`n"
 	index 			:= 1
 	for index in aKeyboardCounters
@@ -406,10 +611,55 @@ F_ColorGuiKeys()
 		; OutputDebug, % aKeyboardCounters[index] . "|" . CntVal . "`n"
 	,	vWhichColor 	:= Ceil((CntVal / MaxVal) * 100)	;Floor = rounding down to the nearest integer
 		; OutputDebug, % "WhichHWND:" . WhichHWND . "|" . "%WhichHWND%:" . %WhichHWND% . "|" . "ColorArg:" . vWhichColor . "|" . "ColorVal:" . rgbColors[vWhichColor] . "`n"
-		if (vWhichColor < 20)		;if the background is black (see color scale), set white color of text
+		if (vWhichColor < 20)		;if the background is dark (see color scale), set white color of text
 			CTLCOLORS.Change(%WhichHWND%, rgbColors[vWhichColor], "FFFFFF")
 		else
 			CTLCOLORS.Change(%WhichHWND%, rgbColors[vWhichColor], "")
+	}
+
+	if (vLeftClicks > 0)
+	{
+		vWhichColor 	:= Ceil((vLeftClicks / MaxVal) * 100)	;Floor = rounding down to the nearest integer
+		if (vWhichColor < 20)		;if the background is dark (see color scale), set white color of text
+			CTLCOLORS.Change(MBLeft, rgbColors[vWhichColor], "FFFFFF")
+		else
+			CTLCOLORS.Change(MBLeft, rgbColors[vWhichColor], "")
+	}
+
+	if (vMiddleClicks > 0)
+	{
+		vWhichColor 	:= Ceil((vMiddleClicks / MaxVal) * 100)	;Floor = rounding down to the nearest integer
+		if (vWhichColor < 20)		;if the background is dark (see color scale), set white color of text
+			CTLCOLORS.Change(MBMiddle, rgbColors[vWhichColor], "FFFFFF")
+		else
+			CTLCOLORS.Change(MBMiddle, rgbColors[vWhichColor], "")
+	}
+
+	if (vRightClicks > 0)
+	{
+		vWhichColor 	:= Ceil((vRightClicks / MaxVal) * 100)	;Floor = rounding down to the nearest integer
+		if (vWhichColor < 20)		;if the background is dark (see color scale), set white color of text
+			CTLCOLORS.Change(MBRight, rgbColors[vWhichColor], "FFFFFF")
+		else
+			CTLCOLORS.Change(MBRight, rgbColors[vWhichColor], "")
+	}
+
+	if (vRollUpCounts > 0)
+	{
+		vWhichColor 	:= Ceil((vRollUpCounts / MaxVal) * 100)	;Floor = rounding down to the nearest integer
+		if (vWhichColor < 20)		;if the background is dark (see color scale), set white color of text
+			CTLCOLORS.Change(RollUp, rgbColors[vWhichColor], "FFFFFF")
+		else
+			CTLCOLORS.Change(RollUp, rgbColors[vWhichColor], "")
+	}
+
+	if (vRollDownCounts > 0)
+	{
+		vWhichColor 	:= Ceil((vRollDownCounts / MaxVal) * 100)	;Floor = rounding down to the nearest integer
+		if (vWhichColor < 20)		;if the background is dark (see color scale), set white color of text
+			CTLCOLORS.Change(RollDown, rgbColors[vWhichColor], "FFFFFF")
+		else
+			CTLCOLORS.Change(RollDown, rgbColors[vWhichColor], "")
 	}
 }
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -418,7 +668,6 @@ F_InitiateInputHook()
 	global	;assume-global mode of operation
 
 	v_InputH 				:= InputHook("I5 V L0")			
-; ,	v_InputH.OnKeyDown		:= Func("F_OnKeyDown")
 ,	v_InputH.OnKeyUp 		:= Func("F_InputHookOnKeyUp")
 ,	v_InputH.OnEnd			:= Func("F_InputHookOnEnd")
 ,	v_InputH.KeyOpt("{All}", "N")	;Necessary if only OnKeyUp is present in the code; "N" = Notify
@@ -431,7 +680,7 @@ F_InputHookOnKeyUp(ih, VK, SC)
 	local	WhatWasUp := GetKeyName(Format("vk{:x}sc{:x}", VK, SC))
 
 	; OutputDebug, % "WhatWasUp:" . WhatWasUp . "`n"
-	vOverallCounter++
+	vOverallKCounter++
 	NewVariableName := ""
 	Switch, WhatWasUp
 	{
