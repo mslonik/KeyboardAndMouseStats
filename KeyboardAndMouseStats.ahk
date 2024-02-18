@@ -63,25 +63,22 @@ return
 ; section of hotkeys
 
 ; Monitor left, right, and middle mouse clicks
-~LButton::	
+~LButton Up::
 	vLeftClicks++
 	vOverallMCounter++
 	F_MCalcDist()
-	F_UpdateGuiValue()	;update values displayed in GUI each time mouse button is pressed
 return
 
-~RButton::	
+~RButton Up::	
 	vRightClicks++
 	vOverallMCounter++
 	F_MCalcDist()
-	F_UpdateGuiValue()	;update values displayed in GUI each time mouse button is pressed
 return
 
-~MButton::	
+~MButton Up::	
 	vMiddleClicks++
 	vOverallMCounter++
 	F_MCalcDist()
-	F_UpdateGuiValue()	;update values displayed in GUI each time mouse button is pressed
 return
 
 ~WheelUp::	
@@ -94,7 +91,48 @@ return
 	vOverallMCounter++
 return
 
-#If WinActive("ahk_id" KeybSHwnd)
+#If WinActive("ahk_id" KeybSHwnd)		;conditional hotkeys
+	~LButton::	
+		F_UpdateGuiValue()			;update values displayed in GUI each time mouse button is pressed
+	return
+
+	~LButton Up::	
+		vLeftClicks++
+		vOverallMCounter++
+		F_MCalcDist()
+		F_RestoreKLabels() 			;Restore keyboard keys labels
+		F_RestoreMLabels()
+		F_ColorGuiKeys()  			;Call your function when the specified GUI window is selected
+		F_UpdateDateTimeCounter()	;Update some GUI values: date, time, overall counter value
+	return
+
+	~MButton::	
+		F_UpdateGuiValue()	;update values displayed in GUI each time mouse button is pressed
+	return
+
+	~MButton Up::
+		vMiddleClicks++
+		vOverallMCounter++
+		F_MCalcDist()
+		F_RestoreKLabels() 			;Restore keyboard keys labels
+		F_RestoreMLabels()
+		F_ColorGuiKeys()  			;Call your function when the specified GUI window is selected
+		F_UpdateDateTimeCounter()	;Update some GUI values: date, time, overall counter value
+	return
+
+	~RButton::	
+		F_UpdateGuiValue()	;update values displayed in GUI each time mouse button is pressed
+	return
+
+	~RButton Up::
+		vMiddleClicks++
+		vOverallMCounter++
+		F_MCalcDist()
+		F_RestoreKLabels() 			;Restore keyboard keys labels
+		F_RestoreMLabels()
+		F_ColorGuiKeys()  			;Call your function when the specified GUI window is selected
+		F_UpdateDateTimeCounter()	;Update some GUI values: date, time, overall counter value
+	return
 
 	~Control::
 		; OutputDebug, % "Ctrl Down" . "`n"
@@ -431,7 +469,8 @@ F_PrepareCurrentVal()
 		,	Text			:= ""	;what to put in the log
 
 	Text 			:= A_Year . "-" . A_MM . "-" . A_DD . A_Space . A_Hour . ":" . A_Min . ":" . A_Sec . "`n"
-	Text				.= "Overall" . "," . vOverallKCounter . "`n"
+	Text				.= "Overall keyboard" 	. "," . vOverallKCounter . "`n"
+	Text				.= "Overall mouse" 		. "," . vOverallMCounter . "`n"
 	for index in aKeyboardCounters
 	{
 		WhichKeyName	:= aKeyboardCounters[index]
@@ -439,6 +478,15 @@ F_PrepareCurrentVal()
 	,	KCvalue 		:= %VarNameTemp%					; KC values are stored under dynamically generated variable
 		Text			.= WhichKeyName . "," . A_Space . KCvalue . ";"
 	}
+	Text				.= "`n`n"
+	Text				.= "LButton" 		. "," . A_Space . vLeftClicks 	. ";"
+	Text				.= "MButton" 		. "," . A_Space . vMiddleClicks 	. ";"
+	Text				.= "RButton" 		. "," . A_Space . vRightClicks	. ";"
+	Text				.= "WheelUp" 		. "," . A_Space . vRollUpCounts	. ";"
+	Text				.= "WheelDown" 	. "," . A_Space . vRollDownCounts	. ";"
+	Text				.= "Dist. [m]"		. "," . A_Space . vDistM			. ";"
+	Text				.= "Dist. [px]"	. "," . A_Space . vDistPix		. ";"
+	Text				.= "mouse DPI"		. "," . A_Space . vDPI			. ";"
 	Text				.= "`n`n"
 	return Text
 }
