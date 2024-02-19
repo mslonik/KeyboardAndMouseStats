@@ -24,6 +24,8 @@
 #SingleInstance, 		force		; Only one instance of this script may run at a time!
 #NoEnv  							; Recommended for performance and compatibility with future AutoHotkey releases.
 #Warn  							; Enable warnings to assist with detecting common errors.
+#HotkeyInterval, 		1000			; Specifies the rate of hotkey activations beyond which a warning dialog will be displayed. Default value = 2000 ms. Workaround of problem with touchpad on Lenovo ThinkPad T14.
+#MaxHotkeysPerInterval, 	200			; Specifies the rate of hotkey activations beyond which a warning dialog will be displayed. Default value = 70. Workaround of problem with touchpad on Lenovo ThinkPad T14.
 ListLines, 			Off			; ListLines is disabled to make it harder to determine how script works.
 SetWorkingDir, 		% A_ScriptDir	; Ensures a consistent starting directory.
 FileEncoding, 			UTF-16		; Sets the default encoding for FileRead, FileReadLine, Loop Read, FileAppend, and FileOpen(). Unicode UTF-16, little endian byte order (BMP of ISO 10646). Useful for .ini files which by default are coded as UTF-16. https://docs.microsoft.com/pl-pl/windows/win32/intl/code-page-identifiers?redirectedfrom=MSDN Warning! UTF-16 is not recognized by Notepad++ editor (2021), which recognizes correctly UCS-2 (defined by the International Standard ISO/IEC 10646). BMP = Basic Multilingual Plane.
