@@ -20,7 +20,7 @@
 */
 ; -----------Beginning of auto-execute section of the script, directives and general settings -------------------------------------------------
 ; After the script has been loaded, it begins executing at the top line, continuing until a Return, Exit, hotkey/hotstring label, or the physical end of the script is encountered (whichever comes first). 
-#Requires AutoHotkey v1.1.34+ 		; Displays an error and quits if a version requirement is not met.    
+#Requires AutoHotkey v1.1.35+ 		; Displays an error and quits if a version requirement is not met.    
 #SingleInstance, 		force		; Only one instance of this script may run at a time!
 #NoEnv  							; Recommended for performance and compatibility with future AutoHotkey releases.
 #Warn  							; Enable warnings to assist with detecting common errors.
@@ -96,11 +96,12 @@ return
 return
 
 #If WinActive("ahk_id" KeybSHwnd)		;conditional hotkeys
-	~LButton::	
+	~LButton::
+		Critical, On
 		F_UpdateGuiValue()			;update values displayed in GUI each time mouse button is pressed
 	return
 
-	~LButton Up::	
+	~LButton Up::
 		vLeftClicks++
 		vOverallMCounter++
 		F_MCalcDist()
@@ -110,7 +111,8 @@ return
 		F_UpdateDateTimeCounter()	;Update some GUI values: date, time, overall counter value
 	return
 
-	~MButton::	
+	~MButton::
+		Critical, On
 		F_UpdateGuiValue()	;update values displayed in GUI each time mouse button is pressed
 	return
 
@@ -124,7 +126,8 @@ return
 		F_UpdateDateTimeCounter()	;Update some GUI values: date, time, overall counter value
 	return
 
-	~RButton::	
+	~RButton::
+		Critical, On
 		F_UpdateGuiValue()	;update values displayed in GUI each time mouse button is pressed
 	return
 
@@ -679,12 +682,14 @@ F_ColorGuiKeys()
 	index 			:= 1
 	for index in aKeyboardCounters
 	{
-		WhichHWND		:= "KeybS_T" . aKeyboardCounters[index]
-	,	CntVarName 	:= "KC_" . aKeyboardCounters[index]	; KC = KeyCounter
+		WhichHWND		:= "KeybS_T" 	. aKeyboardCounters[index]
+	,	CntVarName 	:= "KC_" 		. aKeyboardCounters[index]	; KC = KeyCounter
 	,	CntVal 		:= %CntVarName%
 		; OutputDebug, % aKeyboardCounters[index] . "|" . CntVal . "`n"
 	,	vWhichColor 	:= Ceil((CntVal / MaxVal) * 100)	;Floor = rounding down to the nearest integer
 		; OutputDebug, % "WhichHWND:" . WhichHWND . "|" . "%WhichHWND%:" . %WhichHWND% . "|" . "ColorArg:" . vWhichColor . "|" . "ColorVal:" . rgbColors[vWhichColor] . "`n"
+		if (!IsSet(%WhichHWND%))						;It means there is no such key in GUI layout: such text was not defined, so it can't be colored
+			Continue								;Skips the rest of a loop statement's current iteration and begins a new one.
 		if (vWhichColor < 30)		;if the background is dark (see color scale), set white color of text
 			CTLCOLORS.Change(%WhichHWND%, rgbColors[vWhichColor], "FFFFFF")
 		else
@@ -754,6 +759,14 @@ F_InputHookOnKeyUp(ih, VK, SC)
 	local	WhatWasUp := GetKeyName(Format("vk{:x}sc{:x}", VK, SC))
 
 	; OutputDebug, % "WhatWasUp:" . WhatWasUp . "`n"
+	if (!WhatWasUp)
+	{
+		MsgBox, 64
+			, % SubStr(A_ScriptName, 1, -4)
+			, % "Unrecognized key name." . "`n" . "Virtual Key (VK):" . VK . A_Space . "Scan Code (SC):" SC
+			, 5
+		return
+	}
 	vOverallKCounter++
 	NewVariableName := ""
 	Switch, WhatWasUp
