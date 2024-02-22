@@ -198,10 +198,13 @@ F_CheckMidnight()
 	global	;assume-global mode of operation
 	static 	LastDay		:= A_DD	;keep track of the last day
 	local	CurrentDay	:= 0
+		,	index		:= 1		;index variable of "for" loop
 
 	CurrentDay	:= A_DD			;get the current day
 	if (CurrentDay != LastDay)
 	{
+		for index in aKeyboardCounters
+			aKeyboardCounters[index]	:= 0
 		vOverallKCounter 	:= 0		;overall number of recorded keyboard keys which were up after pressing
 	,	vOverallMCounter	:= 0		;overall number of recorder mouse activities
 	,	vLeftClicks		:= 0		;number of LButton mouse clicks
