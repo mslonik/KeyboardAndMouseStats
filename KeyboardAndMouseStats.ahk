@@ -762,7 +762,7 @@ F_InputHookOnKeyUp(ih, VK, SC)
 	local	WhatWasUp := GetKeyName(Format("vk{:x}sc{:x}", VK, SC))
 
 	; OutputDebug, % "WhatWasUp:" . WhatWasUp . "`n"
-	if (!WhatWasUp)
+	if (WhatWasUp = "")
 	{
 		MsgBox, 64
 			, % SubStr(A_ScriptName, 1, -4)
