@@ -503,8 +503,8 @@ F_PrepareCurrentVal()
 	Text				.= "Overall mouse" 		. "," . vOverallMCounter . "`n"
 	for index in aKeyboardCounters
 	{
-		WhichKeyName	:= aKeyboardCounters[index]
-	,	VarNameTemp 	:= "KC_" . aKeyboardCounters[index]	; KC = KeyCounter
+		WhichKeyName	:= aKeyboardCounters[index] . ""		; if aKeyboardCounters[index] = 0 or 1, then it is converted to text string
+	,	VarNameTemp 	:= "KC_" . WhichKeyName				; KC = KeyCounter
 	,	KCvalue 		:= %VarNameTemp%					; KC values are stored under dynamically generated variable
 		Text			.= WhichKeyName . "," . A_Space . KCvalue . ";"
 	}
@@ -656,6 +656,7 @@ F_ColorGuiKeys()
 		,	vWhichColor 	:= 0
 		,	WhichHWND		:= ""
 		,	MaxVal		:= 0
+		,	WhenDarkLight	:= 40	;if the background is dark (see color scale), set white color of text
 
 	for index in aKeyboardCounters	;search for maximum value
 	{
@@ -693,7 +694,7 @@ F_ColorGuiKeys()
 		; OutputDebug, % "WhichHWND:" . WhichHWND . "|" . "%WhichHWND%:" . %WhichHWND% . "|" . "ColorArg:" . vWhichColor . "|" . "ColorVal:" . rgbColors[vWhichColor] . "`n"
 		if (!IsSet(%WhichHWND%))						;It means there is no such key in GUI layout: such text was not defined, so it can't be colored
 			Continue								;Skips the rest of a loop statement's current iteration and begins a new one.
-		if (vWhichColor < 30)		;if the background is dark (see color scale), set white color of text
+		if (vWhichColor < WhenDarkLight)				;if the background is dark (see color scale), set white color of text
 			CTLCOLORS.Change(%WhichHWND%, rgbColors[vWhichColor], "FFFFFF")
 		else
 			CTLCOLORS.Change(%WhichHWND%, rgbColors[vWhichColor], "")
@@ -702,7 +703,7 @@ F_ColorGuiKeys()
 	if (vLeftClicks > 0)
 	{
 		vWhichColor 	:= Ceil((vLeftClicks / MaxVal) * 100)	;Floor = rounding down to the nearest integer
-		if (vWhichColor < 30)		;if the background is dark (see color scale), set white color of text
+		if (vWhichColor < WhenDarkLight)				;if the background is dark (see color scale), set white color of text
 			CTLCOLORS.Change(MBLeft, rgbColors[vWhichColor], "FFFFFF")
 		else
 			CTLCOLORS.Change(MBLeft, rgbColors[vWhichColor], "")
@@ -711,7 +712,7 @@ F_ColorGuiKeys()
 	if (vMiddleClicks > 0)
 	{
 		vWhichColor 	:= Ceil((vMiddleClicks / MaxVal) * 100)	;Floor = rounding down to the nearest integer
-		if (vWhichColor < 30)		;if the background is dark (see color scale), set white color of text
+		if (vWhichColor < WhenDarkLight)				;if the background is dark (see color scale), set white color of text
 			CTLCOLORS.Change(MBMiddle, rgbColors[vWhichColor], "FFFFFF")
 		else
 			CTLCOLORS.Change(MBMiddle, rgbColors[vWhichColor], "")
@@ -720,7 +721,7 @@ F_ColorGuiKeys()
 	if (vRightClicks > 0)
 	{
 		vWhichColor 	:= Ceil((vRightClicks / MaxVal) * 100)	;Floor = rounding down to the nearest integer
-		if (vWhichColor < 30)		;if the background is dark (see color scale), set white color of text
+		if (vWhichColor < WhenDarkLight)				;if the background is dark (see color scale), set white color of text
 			CTLCOLORS.Change(MBRight, rgbColors[vWhichColor], "FFFFFF")
 		else
 			CTLCOLORS.Change(MBRight, rgbColors[vWhichColor], "")
@@ -729,7 +730,7 @@ F_ColorGuiKeys()
 	if (vRollUpCounts > 0)
 	{
 		vWhichColor 	:= Ceil((vRollUpCounts / MaxVal) * 100)	;Floor = rounding down to the nearest integer
-		if (vWhichColor < 30)		;if the background is dark (see color scale), set white color of text
+		if (vWhichColor < WhenDarkLight)				;if the background is dark (see color scale), set white color of text
 			CTLCOLORS.Change(RollUp, rgbColors[vWhichColor], "FFFFFF")
 		else
 			CTLCOLORS.Change(RollUp, rgbColors[vWhichColor], "")
@@ -738,7 +739,7 @@ F_ColorGuiKeys()
 	if (vRollDownCounts > 0)
 	{
 		vWhichColor 	:= Ceil((vRollDownCounts / MaxVal) * 100)	;Floor = rounding down to the nearest integer
-		if (vWhichColor < 30)		;if the background is dark (see color scale), set white color of text
+		if (vWhichColor < WhenDarkLight)				;if the background is dark (see color scale), set white color of text
 			CTLCOLORS.Change(RollDown, rgbColors[vWhichColor], "FFFFFF")
 		else
 			CTLCOLORS.Change(RollDown, rgbColors[vWhichColor], "")
