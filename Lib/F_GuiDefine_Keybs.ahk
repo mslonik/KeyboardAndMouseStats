@@ -285,7 +285,7 @@
 		.	"g" . "F_OnText"
 		,	% "  0  "
 	GuiControlGet, HWNDaddress, HWND, % KeybS_T0
-	aHWNDToVariable[HWNDaddress] := "KeybS_T0"
+	aHWNDToVariable[HWNDaddress] := "KeybS_T0"	;Keyboard Statistics _ Text 0
 ,	aKeyLabel[HWNDaddress] 		:= "  0  "
 
 	Gui, KeybS: Add

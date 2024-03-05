@@ -199,12 +199,16 @@ F_CheckMidnight()
 	static 	LastDay		:= A_DD	;keep track of the last day
 	local	CurrentDay	:= 0
 		,	index		:= 1		;index variable of "for" loop
+		,	KeybCounter	:= ""
 
 	CurrentDay	:= A_DD			;get the current day
 	if (CurrentDay != LastDay)
 	{
-		for index in aKeyboardCounters
-			aKeyboardCounters[index]	:= 0
+		for index in aKeyboardCounters	;reset values of counters
+		{
+			KeybCounter 	:= "KC_" . aKeyboardCounters[index]
+		,	%KeybCounter% 	:= 0
+		}
 		vOverallKCounter 	:= 0		;overall number of recorded keyboard keys which were up after pressing
 	,	vOverallMCounter	:= 0		;overall number of recorder mouse activities
 	,	vLeftClicks		:= 0		;number of LButton mouse clicks
@@ -503,7 +507,7 @@ F_PrepareCurrentVal()
 	Text				.= "Overall mouse" 		. "," . vOverallMCounter . "`n"
 	for index in aKeyboardCounters
 	{
-		WhichKeyName	:= aKeyboardCounters[index] . ""		; if aKeyboardCounters[index] = 0 or 1, then it is converted to text string
+		WhichKeyName	:= aKeyboardCounters[index]
 	,	VarNameTemp 	:= "KC_" . WhichKeyName				; KC = KeyCounter
 	,	KCvalue 		:= %VarNameTemp%					; KC values are stored under dynamically generated variable
 		Text			.= WhichKeyName . "," . A_Space . KCvalue . ";"
