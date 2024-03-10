@@ -45,6 +45,9 @@ FileEncoding, 			UTF-16		; Sets the default encoding for FileRead, FileReadLine,
 ,	vDistPix			:= 0		;distance travelled by mouse pointer in [px]
 ,	vDistM			:= 0		;distance travelled by mouse pointer in [m]
 ,	vDPI				:= 1600	;actual value for Lenovo mouse M/N: MSU1175
+,	Folder			:= A_ScriptDir . "\" . "Log"
+,	FileName			:= Folder . "\" . A_Year . A_MM . A_DD . "_" . SubStr(A_ScriptName, 1, -4) . "DailyLog" . ".csv"
+
 
 Critical, On
 F_GuiDefine_Keybs()
@@ -403,9 +406,7 @@ F_TrayShowKeybGui()
 F_ExitFunc(ExitReason)	;a function to be called automatically whenever the script exits. 
 {
 	global	;assume-global mode of operation
-	local	Folder			:= A_ScriptDir . "\" . "Log"	
-		,	FileName			:= Folder . "\" . A_Year . A_MM . A_DD . "_" . SubStr(A_ScriptName, 1, -4) . "DailyLog" . ".csv" 
-		,	CurrTime			:= A_Year . "-" . A_MM . "-" . A_DD . A_Space . A_Hour . ":" . A_Min . ":" . A_Sec 
+	local	CurrTime			:= A_Year . "-" . A_MM . "-" . A_DD . A_Space . A_Hour . ":" . A_Min . ":" . A_Sec 
 		,	Text				:=  ""
 
 	Switch ExitReason 
@@ -530,13 +531,7 @@ F_PrepareCurrentVal()
 F_LogValues()
 {
 	global	;assume-global mode of operation
-	local	Folder		:= ""
-		,	FileName		:= ""
-		,	Text			:= ""
-
-	Text 			:= F_PrepareCurrentVal()
-,	Folder			:= A_ScriptDir . "\" . "Log"
-,	FileName			:= Folder . "\" . A_Year . A_MM . A_DD . "_" . SubStr(A_ScriptName, 1, -4) . "DailyLog" . ".csv" 
+	local	Text		:= F_PrepareCurrentVal()
 
 	if (!InStr(FileExist(Folder), "D"))
 	{
@@ -640,14 +635,28 @@ F_ShowKCount()
 	local	index 		:= 1	
 		,	WhichHWND		:= "" 
 		,	CntVarName	:= ""
+		,	Text			:= ""
 
 	for index in aKeyboardCounters
 	{
 		WhichHWND		:= "KeybS_T" . aKeyboardCounters[index]
 	,	CntVarName 	:= "KC_" . aKeyboardCounters[index]	; KC = KeyCounter
-		GuiControl,  
-		,	% %WhichHWND%
-		,	% %CntVarName%
+		if (!IsSet(%WhichHWND%))
+		{
+			Text := "Unrecognized variable name." . "`n" . "WhichHWND:" . WhichHWND . A_Space . "CntVarName:" CntVarName
+			MsgBox, 64
+				, % SubStr(A_ScriptName, 1, -4)
+				, % Text
+				, 5					;wait 5 s and if there is no user reaction, dimiss warning window
+			FileAppend, % Text
+				, % FileName
+				, UTF-8				;encoding
+			Continue
+		}
+		else
+			GuiControl,  
+			,	% %WhichHWND%
+			,	% %CntVarName%
 	}
 } 
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -773,6 +782,9 @@ F_InputHookOnKeyUp(ih, VK, SC)
 			, % SubStr(A_ScriptName, 1, -4)
 			, % "Unrecognized key name." . "`n" . "Virtual Key (VK):" . VK . A_Space . "Scan Code (SC):" SC
 			, 5
+		FileAppend, % Text
+			, % FileName
+			, UTF-8				;encoding
 		return
 	}
 	vOverallKCounter++
