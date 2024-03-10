@@ -312,6 +312,7 @@ F_CurrValToClipboard()
 	MsgBox, 64
 		, % SubStr(A_ScriptName, 1, -4)
 		, Current values were copied into Clipboard
+		, 5		;Dismiss the message box window after 5 s
 }
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 F_HeatmapToClipboard()
@@ -328,6 +329,7 @@ F_HeatmapToClipboard()
 	MsgBox, 64
 		, % SubStr(A_ScriptName, 1, -4)
 		, Heatmap scale was copied into Clipboard
+		, 5		;Dismiss the message box window after 5 s
 }
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 F_RestoreMLabels()
@@ -388,8 +390,6 @@ F_TrayHelp()
 	F2: to copy current results to Clipboard
 	F3: to copy heatmap scale to Clipboard
 	F4: to save current results to log
-	Left mouse click into key name: current value in tooltip
-		displayed for 5 s
 )
 } 
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -532,6 +532,7 @@ F_LogValues()
 {
 	global	;assume-global mode of operation
 	local	Text		:= F_PrepareCurrentVal()
+		,	Text2	:= "Values were added manually to the log file`n"
 
 	if (!InStr(FileExist(Folder), "D"))
 	{
@@ -540,9 +541,14 @@ F_LogValues()
 		; OutputDebug, % "ErrorLevel:" . ErrorLevel . "`n"
 	}
 
-	FileAppend, % Text
+	FileAppend, % Text2 . Text
 		, % FileName
 		, UTF-8										;encoding
+
+	MsgBox, 64
+		, % SubStr(A_ScriptName, 1, -4)
+		, % Text2
+		, 5		;Dismiss the message box window after 5 s
 	; OutputDebug, % "ErrorLevel:" . ErrorLevel . "`n"
 }
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -643,7 +649,7 @@ F_ShowKCount()
 	,	CntVarName 	:= "KC_" . aKeyboardCounters[index]	; KC = KeyCounter
 		if (!IsSet(%WhichHWND%))
 		{
-			Text := "Unrecognized variable name." . "`n" . "WhichHWND:" . WhichHWND . A_Space . "CntVarName:" CntVarName
+			Text := "The following key name wasn't found among keyboard keys of the current layout." . "`n" . "WhichHWND:" . WhichHWND . A_Space . "CntVarName:" CntVarName
 			MsgBox, 64
 				, % SubStr(A_ScriptName, 1, -4)
 				, % Text
