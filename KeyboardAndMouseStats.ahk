@@ -174,7 +174,8 @@ return
 	return
 
 	F4::							;to save current results to log
-		F_LogValues()
+		OutputDebug, % "A_ThisHotkey:" . A_ThisHotkey . "`n"
+		F_LogValues(A_ThisHotkey)
 	return
 
 #If	;end #If
@@ -528,7 +529,7 @@ F_PrepareCurrentVal()
 	return Text
 }
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-F_LogValues()
+F_LogValues(JustPressedHotkey*)	;variadic function
 {
 	global	;assume-global mode of operation
 	local	Text		:= F_PrepareCurrentVal()
@@ -541,14 +542,21 @@ F_LogValues()
 		; OutputDebug, % "ErrorLevel:" . ErrorLevel . "`n"
 	}
 
-	FileAppend, % Text2 . Text
-		, % FileName
-		, UTF-8										;encoding
+	if (JustPressedHotkey[1] = "F4")
+	{
+		FileAppend, % Text2 . Text
+			, % FileName
+			, UTF-8										;encoding
+		MsgBox, 64
+			, % SubStr(A_ScriptName, 1, -4)
+			, % Text2
+			, 5		;Dismiss the message box window after 5 s
+	}
+	else
+		FileAppend, % Text
+			, % FileName
+			, UTF-8										;encoding
 
-	MsgBox, 64
-		, % SubStr(A_ScriptName, 1, -4)
-		, % Text2
-		, 5		;Dismiss the message box window after 5 s
 	; OutputDebug, % "ErrorLevel:" . ErrorLevel . "`n"
 }
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
