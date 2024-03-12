@@ -788,13 +788,15 @@ F_InputHookOnKeyUp(ih, VK, SC)
 	global	;assume-global mode of operation
 	Critical, On
 	local	WhatWasUp := GetKeyName(Format("vk{:x}sc{:x}", VK, SC))
+		,	Text		:= ""
 
 	; OutputDebug, % "WhatWasUp:" . WhatWasUp . "`n"
 	if (WhatWasUp = "")
 	{
+		Text	:= "Unrecognized key name." . "`n" . "Virtual Key (VK):" . VK . A_Space . "Scan Code (SC):" SC
 		MsgBox, 64
 			, % SubStr(A_ScriptName, 1, -4)
-			, % "Unrecognized key name." . "`n" . "Virtual Key (VK):" . VK . A_Space . "Scan Code (SC):" SC
+			, % Text
 			, 5
 		FileAppend, % Text
 			, % FileName
