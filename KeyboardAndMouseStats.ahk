@@ -223,6 +223,8 @@ F_CheckMidnight()
 	,	vDistPix			:= 0		;distance travelled by mouse pointer in [px]
 	,	vDistM			:= 0		;distance travelled by mouse pointer in [m]
 	,	LastDay 			:= CurrentDay
+		F_ShowKCount()
+		F_ShowMCount()
 	}
 }
 ; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -665,6 +667,7 @@ F_ShowKCount()
 			FileAppend, % Text
 				, % FileName
 				, UTF-8				;encoding
+			aKeyboardCounters.RemoveAt(index)	;remove the bonus key. If not removed, it will be cycled each time stats are refreshed.
 			Continue
 		}
 		else
@@ -721,8 +724,8 @@ F_ColorGuiKeys()
 		; OutputDebug, % "WhichHWND:" . WhichHWND . "|" . "%WhichHWND%:" . %WhichHWND% . "|" . "ColorArg:" . vWhichColor . "|" . "ColorVal:" . rgbColors[vWhichColor] . "`n"
 		if (!IsSet(%WhichHWND%))						;It means there is no such key in GUI layout: such text was not defined, so it can't be colored
 			Continue								;Skips the rest of a loop statement's current iteration and begins a new one.
-		if (vWhichColor < WhenDarkLight)				;if the background is dark (see color scale), set white color of text
-			CTLCOLORS.Change(%WhichHWND%, rgbColors[vWhichColor], "FFFFFF")
+		if (vWhichColor > 0) and (vWhichColor < WhenDarkLight)				;if the background is dark (see color scale), set white color of text
+			CTLCOLORS.Change(%WhichHWND%, rgbColors[vWhichColor], "FFFFFF")	;text color = white
 		else
 			CTLCOLORS.Change(%WhichHWND%, rgbColors[vWhichColor], "")
 	}
